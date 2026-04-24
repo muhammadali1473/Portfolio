@@ -48,7 +48,7 @@ export function About() {
               <ProfileRing />
             </motion.div>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-muted-foreground backdrop-blur">
-              Based in Pakistan 🇵🇰 · Serving Globally 🌍
+              Remote developer · Building for founders in US, UK, UAE, Australia, Germany &amp; Canada 🌍
             </span>
           </motion.div>
 

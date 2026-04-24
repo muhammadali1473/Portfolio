@@ -49,12 +49,12 @@ function mockFor(slug: string, title: string) {
       return <SwipiMock title={title} />;
     case "spendwise":
       return <SpendWiseMock title={title} />;
-    case "capella-dubai":
-      return <CapellaMock title={title} />;
-    case "dreamspire-therapy":
-      return <DreamspireMock title={title} />;
-    case "lisa-andrews":
-      return <LisaAndrewsMock title={title} />;
+    case "dubai-real-estate":
+      return <RealEstateConceptMock title={title} />;
+    case "therapy-portal":
+      return <TherapyConceptMock title={title} />;
+    case "spiritual-coaching":
+      return <CoachingConceptMock title={title} />;
     default:
       return <GenericMock title={title} />;
   }
@@ -355,11 +355,11 @@ function MiniCard({
 /* ──────────────────────────────────────────────────────────────
  * Client project mockups (browser chrome style)
  * ────────────────────────────────────────────────────────────── */
-function CapellaMock({ title }: MockProps) {
+function RealEstateConceptMock({ title }: MockProps) {
   return (
     <BrowserMock
       bg="linear-gradient(135deg, #78350f 0%, #b45309 50%, #f59e0b 100%)"
-      badge="Capella Dubai"
+      badge="Real Estate · Concept"
       glyph="⌂"
     >
       <div className="space-y-1">
@@ -379,11 +379,11 @@ function CapellaMock({ title }: MockProps) {
   );
 }
 
-function DreamspireMock({ title }: MockProps) {
+function TherapyConceptMock({ title }: MockProps) {
   return (
     <BrowserMock
       bg="linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #22d3ee 100%)"
-      badge="Dreamspire"
+      badge="Therapy · Concept"
       glyph="☼"
     >
       <div className="space-y-1">
@@ -399,11 +399,11 @@ function DreamspireMock({ title }: MockProps) {
   );
 }
 
-function LisaAndrewsMock({ title }: MockProps) {
+function CoachingConceptMock({ title }: MockProps) {
   return (
     <BrowserMock
       bg="linear-gradient(135deg, #1e1b4b 0%, #6d28d9 45%, #e879f9 100%)"
-      badge="Lisa Andrews"
+      badge="Coaching · Concept"
       glyph="✦"
     >
       <div className="flex items-center gap-2">

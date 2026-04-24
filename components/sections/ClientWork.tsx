@@ -17,23 +17,22 @@ import { Reveal } from "@/components/shared/Reveal";
 import { cn } from "@/lib/utils";
 import { PROJECTS, type Project, type ProjectStatus } from "@/lib/constants";
 
-type Filter = "All" | "Shipped" | "In Progress";
+type FilterValue = "All" | "Shipped" | "In Progress" | "Proposal Stage";
 
 export function ClientWork() {
-  const [filter, setFilter] = useState<Filter>("All");
+  const [filter, setFilter] = useState<FilterValue>("All");
 
   const rows = PROJECTS.filter((p) => {
     if (filter === "All") return true;
     if (filter === "Shipped") return p.status === "shipped";
-    return p.status === "in-progress";
+    if (filter === "In Progress") return p.status === "in-progress";
+    return p.status === "proposal";
   });
 
-  const summary = {
-    total: PROJECTS.length,
-    shipped: PROJECTS.filter((p) => p.status === "shipped").length,
-    inProgress: PROJECTS.filter((p) => p.status === "in-progress").length,
-    clients: new Set(PROJECTS.map((p) => p.client).filter(Boolean)).size,
-  };
+  const shipped = PROJECTS.filter((p) => p.status === "shipped").length;
+  const inProgress = PROJECTS.filter(
+    (p) => p.status === "in-progress" || p.status === "proposal",
+  ).length;
 
   return (
     <section id="client-work" className="relative py-28">
@@ -41,9 +40,9 @@ export function ClientWork() {
       <div className="container relative">
         <SectionHeading
           eyebrow="Client Delivery Dashboard"
-          title="Projects delivered"
-          highlight="to real clients."
-          subtitle="A transparent look at every engagement — status, role, tech, and outcome."
+          title="Work shipped and"
+          highlight="proposals in flight."
+          subtitle="An honest, transparent view: personal products live in production, plus concepts currently at proposal stage."
         />
 
         {/* Summary cards */}
@@ -51,24 +50,24 @@ export function ClientWork() {
           <SummaryCard
             icon={<Sparkles size={16} />}
             label="Total projects"
-            value={summary.total.toString()}
+            value={PROJECTS.length.toString()}
           />
           <SummaryCard
             icon={<CircleCheck size={16} />}
             label="Shipped"
-            value={summary.shipped.toString()}
+            value={shipped.toString()}
             accent="emerald"
           />
           <SummaryCard
             icon={<CircleDashed size={16} />}
             label="In progress"
-            value={summary.inProgress.toString()}
+            value={`${inProgress} (Proposal Stage)`}
             accent="amber"
           />
           <SummaryCard
             icon={<Building2 size={16} />}
             label="Distinct clients"
-            value={summary.clients.toString()}
+            value="2 personal + 3 pitching"
           />
         </div>
 
@@ -76,19 +75,25 @@ export function ClientWork() {
         <Reveal className="mt-8">
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-surface/40 p-3 backdrop-blur">
             <div className="flex items-center gap-2 pl-1">
-              <Filter size={14} className="text-muted-foreground" />
+              <Filter size={14} className="text-muted-foreground" aria-hidden />
               <span className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
                 Filter
               </span>
             </div>
-            <div className="flex flex-wrap items-center gap-1">
-              {(["All", "Shipped", "In Progress"] as const).map((f) => (
+            <div
+              role="tablist"
+              aria-label="Filter projects by status"
+              className="flex flex-wrap items-center gap-1"
+            >
+              {(["All", "Shipped", "Proposal Stage"] as const).map((f) => (
                 <button
                   key={f}
+                  role="tab"
+                  aria-selected={filter === f}
                   type="button"
                   onClick={() => setFilter(f)}
                   className={cn(
-                    "relative rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
+                    "relative rounded-full px-3 py-1.5 text-xs font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
                     filter === f
                       ? "text-white"
                       : "text-muted-foreground hover:text-foreground",
@@ -169,10 +174,11 @@ export function ClientWork() {
                       <a
                         href={p.demoUrl}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
+                        aria-label={`Open ${p.title} in a new tab`}
                         className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-foreground/80 transition-colors hover:text-foreground"
                       >
-                        <ExternalLink size={11} /> Open
+                        <ExternalLink size={11} aria-hidden /> Open
                       </a>
                     ) : (
                       <span className="text-[11px] text-muted-foreground">—</span>
@@ -198,11 +204,11 @@ export function ClientWork() {
                 className="rounded-2xl border border-white/10 bg-surface/40 p-4 backdrop-blur"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 min-w-0">
                     <CategoryDot category={p.category} />
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm font-semibold">{p.title}</p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
                         {p.client} · {p.role}
                       </p>
                     </div>
@@ -224,10 +230,11 @@ export function ClientWork() {
                   <a
                     href={p.demoUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${p.title} in a new tab`}
                     className="mt-3 inline-flex items-center gap-1 text-xs font-semibold gradient-text"
                   >
-                    <ExternalLink size={11} /> Open link
+                    <ExternalLink size={11} aria-hidden /> Open link
                   </a>
                 )}
               </motion.div>
@@ -267,31 +274,39 @@ function SummaryCard({
           {label}
         </span>
       </div>
-      <p className="mt-3 text-3xl font-bold tracking-tight">{value}</p>
+      <p className="mt-3 text-lg font-bold tracking-tight sm:text-xl">{value}</p>
     </div>
   );
 }
 
 function StatusPill({ status }: { status: ProjectStatus }) {
-  const isShipped = status === "shipped";
+  const map = {
+    shipped: {
+      label: "Shipped",
+      cls: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
+      dot: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]",
+    },
+    "in-progress": {
+      label: "In Progress",
+      cls: "border-amber-400/30 bg-amber-400/10 text-amber-300",
+      dot: "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]",
+    },
+    proposal: {
+      label: "Proposal Stage",
+      cls: "border-sky-400/30 bg-sky-400/10 text-sky-300",
+      dot: "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.7)]",
+    },
+  } as const;
+  const cfg = map[status];
   return (
     <span
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em]",
-        isShipped
-          ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300"
-          : "border-amber-400/30 bg-amber-400/10 text-amber-300",
+        cfg.cls,
       )}
     >
-      <span
-        className={cn(
-          "h-1.5 w-1.5 rounded-full",
-          isShipped
-            ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"
-            : "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]",
-        )}
-      />
-      {isShipped ? "Shipped" : "In Progress"}
+      <span className={cn("h-1.5 w-1.5 rounded-full", cfg.dot)} />
+      {cfg.label}
     </span>
   );
 }
@@ -307,6 +322,7 @@ function CategoryDot({ category }: { category: Project["category"] }) {
   return (
     <span
       title={cfg.label}
+      aria-label={cfg.label}
       className={cn(
         "grid h-7 w-7 flex-shrink-0 place-items-center rounded-lg bg-gradient-to-br text-[10px] font-bold text-white",
         cfg.color,

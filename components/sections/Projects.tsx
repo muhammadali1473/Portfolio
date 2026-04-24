@@ -83,7 +83,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
             <a
               href={project.demoUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-foreground/80 transition-colors hover:text-foreground"
             >
               <ExternalLink size={12} /> Demo
@@ -93,7 +93,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
             <a
               href={project.repoUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-foreground/80 transition-colors hover:text-foreground"
             >
               <Github size={12} /> GitHub
@@ -168,7 +168,7 @@ function ProjectModal({
                 <a
                   href={project.demoUrl}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-sm font-semibold text-white shadow-glow"
                 >
                   <ExternalLink size={14} /> Open Demo
@@ -178,7 +178,7 @@ function ProjectModal({
                 <a
                   href={project.repoUrl}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium"
                 >
                   <Github size={14} /> GitHub

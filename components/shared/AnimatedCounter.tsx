@@ -1,46 +1,83 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import {
+  animate,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+} from "framer-motion";
 
 type Props = {
-  value: number;
+  /** Final numeric target (used to drive the tween). */
+  targetValue: number;
+  /**
+   * Final rendered string once animation completes (e.g. "12+", "100%").
+   * Must contain the digits from targetValue somewhere — we swap them mid-tween.
+   */
+  display: string;
+  /** Accessible label (announced to screen readers). */
+  label?: string;
+  /** Animation duration in seconds. Defaults to 2s per spec. */
   duration?: number;
-  suffix?: string;
-  prefix?: string;
   className?: string;
 };
 
+/**
+ * Animates a number from 0 → targetValue when the element scrolls into view,
+ * using Framer Motion's `animate()` + useMotionValue with an easeOut curve.
+ * Triggers exactly once.
+ *
+ * The final rendered output preserves the design's suffix (e.g. "+", "%", "K")
+ * by subbing the live number into the `display` template at render time.
+ */
 export function AnimatedCounter({
-  value,
-  duration = 1600,
-  suffix = "",
-  prefix = "",
+  targetValue,
+  display,
+  label,
+  duration = 2,
   className,
 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-20%" });
-  const [display, setDisplay] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+
+  const motionValue = useMotionValue(0);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     if (!inView) return;
-    let rafId: number;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setDisplay(Math.round(value * eased));
-      if (t < 1) rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, [inView, value, duration]);
+
+    if (prefersReducedMotion) {
+      setCurrent(targetValue);
+      return;
+    }
+
+    const controls = animate(motionValue, targetValue, {
+      duration,
+      ease: "easeOut",
+      onUpdate: (v) => setCurrent(Math.round(v)),
+    });
+
+    return () => controls.stop();
+  }, [inView, targetValue, duration, motionValue, prefersReducedMotion]);
+
+  // Swap the numeric portion of `display` with the current animated value
+  // while preserving any "+" / "%" / "K" suffix or prefix.
+  const targetString = String(targetValue);
+  const rendered =
+    current >= targetValue
+      ? display
+      : display.replace(targetString, current.toLocaleString());
 
   return (
-    <span ref={ref} className={className}>
-      {prefix}
-      {display.toLocaleString()}
-      {suffix}
+    <span
+      ref={ref}
+      className={className}
+      aria-label={label ? `${display} ${label}` : display}
+      role="text"
+    >
+      <span aria-hidden="true">{rendered}</span>
     </span>
   );
 }

@@ -44,7 +44,12 @@ export function ProjectEstimator() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Couldn't generate an estimate.");
+      if (!res.ok) {
+        throw new Error(
+          data.error ||
+            "Something went wrong — please try again or contact Muhammad directly at get.muhammad5@gmail.com",
+        );
+      }
       setEstimate(data);
     } catch (err) {
       setError((err as Error).message);
@@ -135,9 +140,14 @@ export function ProjectEstimator() {
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 text-sm font-semibold text-white shadow-glow transition-all hover:brightness-110 disabled:opacity-60"
+          aria-busy={loading}
+          className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 text-sm font-semibold text-white shadow-glow transition-all hover:brightness-110 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
         >
-          {loading ? <Loader2 size={16} className="animate-spin" /> : <Wand2 size={14} />}
+          {loading ? (
+            <Loader2 size={16} className="animate-spin" aria-hidden />
+          ) : (
+            <Wand2 size={14} aria-hidden />
+          )}
           {loading ? "Analyzing…" : "Generate Estimate"}
         </button>
       </form>
@@ -187,9 +197,10 @@ export function ProjectEstimator() {
             </div>
             <a
               href="#contact"
-              className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:underline"
+              aria-label="Contact Muhammad about this estimate"
+              className="mt-5 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 text-sm font-semibold text-white shadow-glow transition-all hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
             >
-              Send to Muhammad →
+              Contact Muhammad →
             </a>
           </motion.div>
         )}

@@ -18,10 +18,64 @@ export type GithubRepo = {
   homepage: string | null;
 };
 
+// Fallback data if the GitHub API is unreachable or rate-limited.
+// Keeps the "Open Source" section from stalling on "Loading…" forever.
+const FALLBACK_REPOS: GithubRepo[] = [
+  {
+    id: -1,
+    name: "linkedin-mcp-server",
+    description: "Custom MCP server for LinkedIn automation",
+    htmlUrl: `${site.github}/linkedin-mcp-server`,
+    language: "Python",
+    stars: 0,
+    forks: 0,
+    topics: ["mcp", "linkedin", "python", "ai-agents"],
+    updatedAt: new Date().toISOString(),
+    homepage: null,
+  },
+  {
+    id: -2,
+    name: "x-mcp-builder",
+    description: "MCP server for X/Twitter scheduling and analytics",
+    htmlUrl: `${site.github}/x-mcp-builder`,
+    language: "TypeScript",
+    stars: 0,
+    forks: 0,
+    topics: ["mcp", "twitter", "x", "typescript"],
+    updatedAt: new Date().toISOString(),
+    homepage: null,
+  },
+  {
+    id: -3,
+    name: "ai-portfolio-site",
+    description: "My portfolio with live AI demos powered by Groq",
+    htmlUrl: `${site.github}/ai-portfolio-site`,
+    language: "TypeScript",
+    stars: 0,
+    forks: 0,
+    topics: ["nextjs", "groq", "portfolio"],
+    updatedAt: new Date().toISOString(),
+    homepage: null,
+  },
+  {
+    id: -4,
+    name: "swipi-photo-cleaner",
+    description: "iOS app for Tinder-style photo cleanup",
+    htmlUrl: `${site.github}/swipi-photo-cleaner`,
+    language: "Swift",
+    stars: 0,
+    forks: 0,
+    topics: ["ios", "swift", "photos"],
+    updatedAt: new Date().toISOString(),
+    homepage: null,
+  },
+];
+
 export async function GET() {
   try {
+    // Spec: sort=updated, per_page=6 — filter out archived below.
     const res = await fetch(
-      `https://api.github.com/users/${site.githubUsername}/repos?per_page=100&type=public&sort=updated`,
+      `https://api.github.com/users/${site.githubUsername}/repos?sort=updated&per_page=6`,
       {
         headers: {
           Accept: "application/vnd.github+json",
@@ -36,10 +90,13 @@ export async function GET() {
     );
 
     if (!res.ok) {
-      const text = await res.text();
       return NextResponse.json(
-        { error: `GitHub API error: ${res.status}`, detail: text.slice(0, 200) },
-        { status: 502 },
+        { repos: FALLBACK_REPOS, username: site.githubUsername, fallback: true },
+        {
+          headers: {
+            "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+          },
+        },
       );
     }
 
@@ -74,25 +131,41 @@ export async function GET() {
         updatedAt: r.updated_at,
         homepage: r.homepage,
       }))
-      // Most-recently updated first, then by stars as tiebreaker
       .sort(
         (a, b) =>
           new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime() ||
           b.stars - a.stars,
       );
 
+    // If API returned zero (e.g. user has none yet), fall back to curated list
+    // instead of a blank section.
+    if (repos.length === 0) {
+      return NextResponse.json(
+        { repos: FALLBACK_REPOS, username: site.githubUsername, fallback: true },
+        {
+          headers: {
+            "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+          },
+        },
+      );
+    }
+
     return NextResponse.json(
-      { repos, username: site.githubUsername },
+      { repos, username: site.githubUsername, fallback: false },
       {
         headers: {
           "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
         },
       },
     );
-  } catch (err) {
+  } catch {
     return NextResponse.json(
-      { error: "Failed to fetch repositories", detail: (err as Error).message },
-      { status: 500 },
+      { repos: FALLBACK_REPOS, username: site.githubUsername, fallback: true },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+        },
+      },
     );
   }
 }

@@ -17,98 +17,136 @@ export default function OpengraphImage() {
           flexDirection: "column",
           padding: "72px",
           position: "relative",
+          fontFamily: "system-ui, sans-serif",
         }}
       >
+        {/* Gradient glow background */}
         <div
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(1200px 600px at 15% -10%, rgba(139,92,246,0.45), transparent 60%), radial-gradient(1000px 500px at 95% 10%, rgba(6,182,212,0.3), transparent 60%), radial-gradient(900px 500px at 50% 110%, rgba(59,130,246,0.3), transparent 60%)",
+              "radial-gradient(1100px 600px at 15% 0%, rgba(139,92,246,0.45), transparent 55%), radial-gradient(900px 500px at 95% 10%, rgba(6,182,212,0.35), transparent 60%), radial-gradient(900px 500px at 50% 110%, rgba(59,130,246,0.3), transparent 60%)",
           }}
         />
+
+        {/* Bottom-right accent glow */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "-120px",
+            right: "-80px",
+            width: "480px",
+            height: "480px",
+            borderRadius: "9999px",
+            background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
+            opacity: 0.45,
+            filter: "blur(90px)",
+          }}
+        />
+
+        {/* Top row: MA mark + handle */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "14px",
-            fontSize: "20px",
+            gap: "16px",
+            fontSize: "22px",
             color: "#A1A1AA",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            fontFamily: "monospace",
           }}
         >
           <div
             style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "10px",
+              width: "56px",
+              height: "56px",
+              borderRadius: "14px",
               background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               color: "#ffffff",
-              fontWeight: 700,
-              fontSize: "16px",
+              fontWeight: 800,
+              fontSize: "24px",
               letterSpacing: 0,
             }}
           >
             MA
           </div>
-          Muhammad Ali
+          @get_Muham
         </div>
 
+        {/* Main stack */}
         <div
           style={{
             marginTop: "auto",
             display: "flex",
             flexDirection: "column",
-            gap: "18px",
+            gap: "24px",
           }}
         >
           <div
             style={{
-              fontSize: "72px",
-              lineHeight: 1.05,
+              fontSize: "108px",
+              lineHeight: 1,
               fontWeight: 800,
-              letterSpacing: "-0.02em",
+              letterSpacing: "-0.03em",
               color: "#FAFAFA",
-              maxWidth: "930px",
-              display: "flex",
-              flexWrap: "wrap",
             }}
           >
-            <span>Building&nbsp;</span>
-            <span
-              style={{
-                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
-                backgroundClip: "text",
-                color: "transparent",
-              }}
-            >
-              intelligent
-            </span>
-            <span>&nbsp;products for&nbsp;</span>
-            <span
-              style={{
-                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
-                backgroundClip: "text",
-                color: "transparent",
-              }}
-            >
-              ambitious
-            </span>
-            <span>&nbsp;businesses.</span>
+            Muhammad Ali
+          </div>
+          <div
+            style={{
+              fontSize: "42px",
+              fontWeight: 600,
+              color: "#E5E7EB",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Full-Stack Developer &amp; AI Specialist
           </div>
           <div
             style={{
               fontSize: "26px",
               color: "#A1A1AA",
-              maxWidth: "820px",
+              display: "flex",
+              gap: "10px",
             }}
           >
-            AI agents · MCP servers · Modern web apps · Serving clients globally.
+            <span
+              style={{
+                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
+                backgroundClip: "text",
+                color: "transparent",
+                fontWeight: 600,
+              }}
+            >
+              AI Agents
+            </span>
+            <span>·</span>
+            <span
+              style={{
+                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
+                backgroundClip: "text",
+                color: "transparent",
+                fontWeight: 600,
+              }}
+            >
+              MCP Servers
+            </span>
+            <span>·</span>
+            <span
+              style={{
+                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
+                backgroundClip: "text",
+                color: "transparent",
+                fontWeight: 600,
+              }}
+            >
+              Modern Web Apps
+            </span>
           </div>
         </div>
       </div>

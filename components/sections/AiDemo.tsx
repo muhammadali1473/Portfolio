@@ -1,14 +1,35 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import { Loader2 } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
-import { AskAiChat } from "@/components/ai/AskAiChat";
-import { ProjectEstimator } from "@/components/ai/ProjectEstimator";
+
+// Heavy demo widgets — dynamically import so they don't block the first paint
+// of the marketing page. They fall below the fold on desktop and mobile.
+const AskAiChat = dynamic(
+  () => import("@/components/ai/AskAiChat").then((m) => m.AskAiChat),
+  {
+    ssr: false,
+    loading: () => <DemoSkeleton label="Loading AI chat…" />,
+  },
+);
+
+const ProjectEstimator = dynamic(
+  () => import("@/components/ai/ProjectEstimator").then((m) => m.ProjectEstimator),
+  {
+    ssr: false,
+    loading: () => <DemoSkeleton label="Loading project estimator…" />,
+  },
+);
 
 export function AiDemo() {
   return (
     <section id="ai-demo" className="relative py-28">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/10 via-transparent to-transparent"
+      />
       <div className="container relative">
         <SectionHeading
           eyebrow="AI Live Demo"
@@ -26,5 +47,19 @@ export function AiDemo() {
         </div>
       </div>
     </section>
+  );
+}
+
+function DemoSkeleton({ label }: { label: string }) {
+  return (
+    <div
+      className="flex h-[480px] items-center justify-center rounded-2xl border border-white/10 bg-surface/40 backdrop-blur"
+      role="status"
+      aria-live="polite"
+    >
+      <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+        <Loader2 size={14} className="animate-spin" aria-hidden /> {label}
+      </span>
+    </div>
   );
 }

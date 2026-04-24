@@ -57,10 +57,18 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-muted-foreground md:flex-row">
-          <p>© {year} {site.name}. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <p>© {year} {site.name}. All rights reserved.</p>
+            <Link
+              href="/privacy"
+              className="transition-colors hover:text-foreground"
+            >
+              Privacy Policy
+            </Link>
+          </div>
           <p>
-            Built with Next.js, Tailwind, and <span className="text-rose-400">❤</span> from
-            Pakistan.
+            Built with Next.js, Tailwind, and <span className="text-rose-400" aria-hidden>❤</span>
+            <span className="sr-only">love</span> from Pakistan.
           </p>
         </div>
       </div>
@@ -81,9 +89,9 @@ function SocialIcon({
     <a
       href={href}
       target="_blank"
-      rel="noreferrer"
-      aria-label={label}
-      className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10 hover:text-foreground"
+      rel="noopener noreferrer"
+      aria-label={`${label} (opens in new tab)`}
+      className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
     >
       {children}
     </a>

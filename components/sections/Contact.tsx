@@ -161,8 +161,9 @@ export function Contact() {
                       key={t}
                       type="button"
                       onClick={() => toggleType(t)}
+                      aria-pressed={active}
                       className={cn(
-                        "rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
+                        "min-h-[44px] rounded-full border px-4 py-2 text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
                         active
                           ? "border-transparent bg-gradient-primary text-white shadow-glow"
                           : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/25 hover:text-foreground",
@@ -310,7 +311,7 @@ export function Contact() {
 }
 
 const inputClass =
-  "w-full rounded-xl border border-white/10 bg-background/60 px-3.5 py-2.5 text-sm text-foreground outline-none transition-all focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.18)]";
+  "w-full min-h-[44px] rounded-xl border border-white/10 bg-background/60 px-3.5 py-3 text-sm text-foreground outline-none transition-all focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.18)]";
 
 function Field({
   label,
@@ -353,7 +354,7 @@ function ContactCard({
     <a
       href={href}
       target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       className={cn(
         "group flex items-center gap-3 rounded-2xl border backdrop-blur transition-all",
         compact ? "p-3" : "p-4",

@@ -16,6 +16,10 @@ export default function ParticleNetwork() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
+    // Skip the particle field on mobile — it's expensive to animate and hurts
+    // LCP + battery without adding much visual value on small screens.
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+
     let width = 0;
     let height = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);

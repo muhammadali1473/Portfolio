@@ -29,7 +29,7 @@ export const HERO_STATS: HeroStat[] = [
   { value: "4+", label: "Years Experience" },
   { value: "12+", label: "Projects Shipped" },
   { value: "2", label: "iOS Apps on App Store" },
-  { value: "5+", label: "Countries Served" },
+  { value: "100%", label: "On-Time Delivery" },
 ];
 
 export type ValueCard = { icon: LucideIcon; title: string; description: string };
@@ -173,7 +173,7 @@ export const SERVICES: Service[] = [
   },
 ];
 
-export type ProjectStatus = "shipped" | "in-progress";
+export type ProjectStatus = "shipped" | "in-progress" | "proposal";
 export type ProjectCategory = "Product" | "Client" | "Open Source" | "iOS App";
 
 export type Project = {
@@ -274,61 +274,58 @@ export const PROJECTS: Project[] = [
     thumb: "spendwise",
   },
   {
-    id: "capella-dubai",
-    title: "Capella Dubai AI Real Estate",
+    id: "dubai-real-estate",
+    title: "Dubai Real Estate AI Platform (Concept)",
     summary:
-      "Next-gen real estate platform for the Dubai market with bilingual AI, property matching, and WhatsApp integration.",
+      "Concept for a next-gen real estate platform — bilingual AI, property matching, and WhatsApp integration for the Dubai market.",
     description:
-      "Bilingual (English + Arabic) real estate concierge with AI-powered property matching, WhatsApp chat, and embedded virtual tours.",
+      "Proposal-stage concept: bilingual (English + Arabic) real estate concierge with AI-powered property matching, WhatsApp chat, and embedded virtual tours.",
     story:
-      "A full concierge experience for a premium Dubai brokerage. Visitors describe their needs in plain English or Arabic; the AI matches listings, books viewings, and hands off hot leads to WhatsApp. The underlying data pipeline refreshes inventory hourly and keeps tour embeds lazy-loaded for speed.",
+      "A scoped concept designed for a UAE real estate client. Visitors describe their needs in plain English or Arabic; the AI matches listings, books viewings, and hands off hot leads to WhatsApp. The data pipeline refreshes inventory hourly and lazy-loads tour embeds for speed. Currently at proposal stage — not yet a signed engagement.",
     tech: ["Next.js", "Groq / Claude", "TailwindCSS", "MongoDB"],
-    status: "in-progress",
-    outcome: "Launching Q2 — beta with select agents",
-    client: "Capella Holdings (UAE)",
-    role: "Full-stack lead",
-    delivered: "Beta",
+    status: "proposal",
+    outcome: "Proposal stage — awaiting client go-ahead",
+    client: "Real Estate Client (UAE)",
+    role: "Proposed full-stack lead",
+    delivered: "Proposal",
     category: "Client",
-    demoUrl: "#",
-    thumb: "capella-dubai",
+    thumb: "dubai-real-estate",
   },
   {
-    id: "dreamspire-therapy",
-    title: "Dreamspire Therapy Portal",
+    id: "therapy-portal",
+    title: "Therapy Clinic Portal (Concept)",
     summary:
-      "NDIS-compliant therapy clinic site — parent portal, AI FAQ, online booking, and session tracking.",
+      "Proposal for an NDIS-compliant therapy clinic site — parent portal, AI FAQ, online booking, and session tracking.",
     description:
-      "Production healthcare portal for a children's speech and behavior clinic. Parent portal, AI FAQ, bookings, and session notes.",
+      "Proposal-stage concept: healthcare portal for a children's speech and behavior clinic. Parent portal, AI FAQ, bookings, and session notes.",
     story:
-      "Healthcare means compliance. The portal meets NDIS requirements for record-keeping while staying friendly for busy parents. The AI FAQ answers intake questions in plain language, and therapists manage sessions through a clean admin surface.",
+      "Healthcare means compliance. The concept meets NDIS record-keeping requirements while staying friendly for busy parents. The AI FAQ answers intake questions in plain language, and therapists manage sessions through a clean admin surface. Scoped and pitched — awaiting engagement.",
     tech: ["Next.js", "FastAPI", "PostgreSQL", "Groq"],
-    status: "in-progress",
-    outcome: "Rolling out to full parent base",
-    client: "Dreamspire Therapy (AUS)",
-    role: "Full-stack lead",
-    delivered: "Beta",
+    status: "proposal",
+    outcome: "Proposal stage — awaiting client go-ahead",
+    client: "Healthcare Client (AUS)",
+    role: "Proposed full-stack lead",
+    delivered: "Proposal",
     category: "Client",
-    demoUrl: "#",
-    thumb: "dreamspire-therapy",
+    thumb: "therapy-portal",
   },
   {
-    id: "lisa-andrews",
-    title: "Lisa Andrews Spiritual Platform",
+    id: "spiritual-coaching",
+    title: "Spiritual Coaching Platform (Concept)",
     summary:
-      "Mystical coaching platform with an AI psychic assistant, advanced booking, course platform, and lead magnets.",
+      "Proposal for a mystical coaching platform — AI assistant, advanced booking, course platform, and lead magnets.",
     description:
-      "Premium spiritual coaching platform. AI psychic assistant, waitlist-aware booking, courses, and evergreen lead magnets.",
+      "Proposal-stage concept: premium spiritual coaching platform with an AI assistant, waitlist-aware booking, courses, and evergreen lead magnets.",
     story:
-      "A high-end spiritual brand needed a site that *felt* like the brand — mystical, cinematic, and personal. Stripe-powered courses, a booking flow with automated waitlists, and an AI psychic assistant that stays on-tone with Lisa's voice round out the experience.",
+      "A scoped concept for a high-end spiritual brand that wanted a site reflecting their voice — mystical, cinematic, and personal. Stripe-powered courses, a booking flow with automated waitlists, and an on-tone AI assistant round out the experience. Currently at proposal stage.",
     tech: ["Next.js", "Stripe", "Groq", "TailwindCSS"],
-    status: "in-progress",
-    outcome: "Launching with 3 pre-sold courses",
-    client: "Lisa Andrews Coaching (US)",
-    role: "Full-stack lead",
-    delivered: "Beta",
+    status: "proposal",
+    outcome: "Proposal stage — awaiting client go-ahead",
+    client: "Coaching Client (UK)",
+    role: "Proposed full-stack lead",
+    delivered: "Proposal",
     category: "Client",
-    demoUrl: "#",
-    thumb: "lisa-andrews",
+    thumb: "spiritual-coaching",
   },
 ];
 
@@ -481,6 +478,22 @@ export const STATS: Stat[] = [
   { value: "100", suffix: "%", label: "On-Time Delivery" },
 ];
 
+// Parallel array used by the AnimatedCounter pipeline — targetValue is the
+// final number (sans suffix) and `display` is what we render once the
+// counter settles (preserves the "+" / "%" suffix from the design).
+export type AnimatedStat = {
+  targetValue: number;
+  display: string;
+  label: string;
+};
+
+export const ANIMATED_STATS: AnimatedStat[] = [
+  { targetValue: 12, display: "12+", label: "Projects Shipped" },
+  { targetValue: 4, display: "4+", label: "Years Experience" },
+  { targetValue: 2, display: "2", label: "iOS Apps Live" },
+  { targetValue: 100, display: "100%", label: "On-Time Delivery" },
+];
+
 export const TRUST_BADGES = [
   "Powered by Groq",
   "iOS App Store Approved",
@@ -500,52 +513,10 @@ export type Testimonial = {
   accent: string;
 };
 
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    quote:
-      "Muhammad delivered beyond expectations. The AI chatbot he built handles 80% of our inquiries automatically. Best investment we made this year.",
-    name: "Sarah K.",
-    title: "Founder",
-    company: "GrowthLabs",
-    country: "UK",
-    rating: 5,
-    initials: "SK",
-    accent: "from-fuchsia-500 to-blue-500",
-  },
-  {
-    quote:
-      "He shipped our MCP integration in under two weeks — clean code, clear docs, and zero hand-holding required. Hiring him for round two.",
-    name: "Marcus R.",
-    title: "CTO",
-    company: "Vertex AI Studio",
-    country: "USA",
-    rating: 5,
-    initials: "MR",
-    accent: "from-blue-500 to-cyan-400",
-  },
-  {
-    quote:
-      "We tried three agencies before Muhammad. He understood our business in one call and the bilingual AI he built for us is indistinguishable from a human agent.",
-    name: "Fatima A.",
-    title: "Operations Director",
-    company: "Capella Holdings",
-    country: "UAE",
-    rating: 5,
-    initials: "FA",
-    accent: "from-amber-400 to-fuchsia-500",
-  },
-  {
-    quote:
-      "A rare blend of technical depth and business sense. He flagged three things in the scoping call that would have cost us weeks later. Five stars.",
-    name: "James P.",
-    title: "Head of Product",
-    company: "Northwind Ventures",
-    country: "Australia",
-    rating: 5,
-    initials: "JP",
-    accent: "from-cyan-400 to-violet-500",
-  },
-];
+// No public testimonials yet — first client cohort in progress.
+// The Testimonials section renders an honest placeholder plus App Store CTAs
+// instead of carousel rotation.
+export const TESTIMONIALS: Testimonial[] = [];
 
 export type AssistantQuickPrompt = { label: string; prompt: string };
 

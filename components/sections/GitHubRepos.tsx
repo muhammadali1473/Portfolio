@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, GitFork, Github, Loader2, Star } from "lucide-react";
+import {
+  ExternalLink,
+  GitFork,
+  Github,
+  Info,
+  Loader2,
+  Star,
+} from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { site } from "@/lib/site";
@@ -25,26 +32,26 @@ const LANG_COLORS: Record<string, string> = {
 export function GitHubRepos() {
   const [repos, setRepos] = useState<GithubRepo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isFallback, setIsFallback] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
     (async () => {
       try {
-        const res = await fetch("/api/github");
+        const res = await fetch("/api/github", { signal: controller.signal });
         const data = await res.json();
-        if (cancelled) return;
-        if (!res.ok) throw new Error(data.error || "Failed to load repos");
+        if (controller.signal.aborted) return;
         setRepos(data.repos || []);
-      } catch (err) {
-        if (!cancelled) setError((err as Error).message);
+        setIsFallback(Boolean(data.fallback));
+      } catch {
+        // Keep empty — the API route itself now returns fallbacks. This catch
+        // only fires on a network-level failure of our own endpoint.
+        setIsFallback(true);
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     })();
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, []);
 
   const totalStars = repos.reduce((acc, r) => acc + r.stars, 0);
@@ -67,7 +74,7 @@ export function GitHubRepos() {
           <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-surface/40 p-5 backdrop-blur sm:p-6">
             <div className="flex items-center gap-4">
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow">
-                <Github size={22} />
+                <Github size={22} aria-hidden />
               </div>
               <div>
                 <p className="text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground">
@@ -79,7 +86,7 @@ export function GitHubRepos() {
                     : `${repos.length} public repositor${repos.length === 1 ? "y" : "ies"}`}
                   {!loading && totalStars > 0 && (
                     <span className="ml-3 inline-flex items-center gap-1 text-sm font-normal text-muted-foreground">
-                      <Star size={12} fill="currentColor" />
+                      <Star size={12} fill="currentColor" aria-hidden />
                       {totalStars}
                     </span>
                   )}
@@ -87,10 +94,15 @@ export function GitHubRepos() {
               </div>
             </div>
             {languages.length > 0 && (
-              <div className="flex flex-wrap items-center gap-2">
+              <div
+                className="flex flex-wrap items-center gap-2"
+                role="list"
+                aria-label="Languages used across repos"
+              >
                 {languages.map((lang) => (
                   <span
                     key={lang}
+                    role="listitem"
                     className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-muted-foreground"
                   >
                     <span
@@ -98,6 +110,7 @@ export function GitHubRepos() {
                         "h-2 w-2 rounded-full",
                         LANG_COLORS[lang] || "bg-white/40",
                       )}
+                      aria-hidden
                     />
                     {lang}
                   </span>
@@ -107,11 +120,12 @@ export function GitHubRepos() {
             <a
               href={site.github}
               target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10"
+              rel="noopener noreferrer"
+              aria-label={`View Muhammad Ali's GitHub profile (opens in new tab)`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
             >
               View on GitHub
-              <ExternalLink size={13} />
+              <ExternalLink size={13} aria-hidden />
             </a>
           </div>
         </Reveal>
@@ -124,109 +138,127 @@ export function GitHubRepos() {
                 <div
                   key={i}
                   className="h-40 animate-pulse rounded-2xl border border-white/10 bg-surface/30"
+                  aria-hidden
                 />
               ))}
-              <div className="col-span-full flex items-center justify-center gap-2 pt-2 text-xs text-muted-foreground">
-                <Loader2 size={12} className="animate-spin" />
+              <div
+                className="col-span-full flex items-center justify-center gap-2 pt-2 text-xs text-muted-foreground"
+                role="status"
+                aria-live="polite"
+              >
+                <Loader2 size={12} className="animate-spin" aria-hidden />
                 Fetching public repositories…
               </div>
             </div>
           )}
 
-          {!loading && error && (
-            <div className="rounded-2xl border border-destructive/40 bg-destructive/10 p-6 text-sm text-destructive">
-              Couldn&apos;t load GitHub repositories: {error}
-              <div className="mt-2 text-xs opacity-80">
-                You can still view them directly at{" "}
-                <a
-                  href={site.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline"
-                >
-                  {site.github}
-                </a>
-                .
-              </div>
-            </div>
-          )}
-
-          {!loading && !error && repos.length === 0 && (
+          {!loading && repos.length === 0 && (
             <div className="rounded-2xl border border-white/10 bg-surface/40 p-10 text-center text-sm text-muted-foreground">
-              No public repositories yet — stay tuned.
+              No public repositories to show yet. Head over to{" "}
+              <a
+                href={site.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                @{site.githubUsername}
+              </a>
+              .
             </div>
           )}
 
           {!loading && repos.length > 0 && (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {repos.slice(0, 12).map((repo, i) => (
-                <motion.a
-                  key={repo.id}
-                  href={repo.htmlUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.45, delay: i * 0.04 }}
-                  whileHover={{ y: -4 }}
-                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface/40 p-5 backdrop-blur transition-all hover:border-white/20 hover:shadow-glow"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <Github size={16} className="text-muted-foreground" />
-                      <span className="truncate text-sm font-semibold">
-                        {repo.name}
-                      </span>
-                    </div>
-                    <ExternalLink
-                      size={14}
-                      className="flex-shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
-                    />
-                  </div>
-                  <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground line-clamp-3">
-                    {repo.description || "No description provided."}
-                  </p>
-                  {repo.topics.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-1">
-                      {repo.topics.slice(0, 3).map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
-                        >
-                          {t}
+            <>
+              {isFallback && (
+                <div className="mb-4 flex items-center gap-2 rounded-xl border border-white/10 bg-surface/40 px-4 py-2.5 text-xs text-muted-foreground">
+                  <Info size={13} aria-hidden />
+                  GitHub API is currently rate-limited — showing a curated snapshot. Full
+                  list lives on GitHub.
+                </div>
+              )}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {repos.slice(0, 6).map((repo, i) => (
+                  <motion.a
+                    key={repo.id}
+                    href={repo.htmlUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${repo.name} repository on GitHub (opens in new tab)`}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.45, delay: i * 0.04 }}
+                    whileHover={{ y: -4 }}
+                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface/40 p-5 backdrop-blur transition-all hover:border-white/20 hover:shadow-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <Github size={16} className="text-muted-foreground" aria-hidden />
+                        <span className="truncate text-sm font-semibold">
+                          {repo.name}
                         </span>
-                      ))}
+                      </div>
+                      <ExternalLink
+                        size={14}
+                        className="flex-shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
+                        aria-hidden
+                      />
                     </div>
-                  )}
-                  <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
-                    {repo.language && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <span
-                          className={cn(
-                            "h-2 w-2 rounded-full",
-                            LANG_COLORS[repo.language] || "bg-white/40",
-                          )}
-                        />
-                        {repo.language}
-                      </span>
+                    <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground line-clamp-3">
+                      {repo.description || "No description provided."}
+                    </p>
+                    {repo.topics.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {repo.topics.slice(0, 3).map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     )}
-                    {repo.stars > 0 && (
-                      <span className="inline-flex items-center gap-1">
-                        <Star size={11} fill="currentColor" />
+                    <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
+                      {repo.language && (
+                        <span className="inline-flex items-center gap-1.5">
+                          <span
+                            className={cn(
+                              "h-2 w-2 rounded-full",
+                              LANG_COLORS[repo.language] || "bg-white/40",
+                            )}
+                            aria-hidden
+                          />
+                          {repo.language}
+                        </span>
+                      )}
+                      <span className="inline-flex items-center gap-1" aria-label={`${repo.stars} stars`}>
+                        <Star size={11} fill="currentColor" aria-hidden />
                         {repo.stars}
                       </span>
-                    )}
-                    {repo.forks > 0 && (
-                      <span className="inline-flex items-center gap-1">
-                        <GitFork size={11} />
+                      <span className="inline-flex items-center gap-1" aria-label={`${repo.forks} forks`}>
+                        <GitFork size={11} aria-hidden />
                         {repo.forks}
                       </span>
-                    )}
-                  </div>
-                </motion.a>
-              ))}
-            </div>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+
+              <div className="mt-8 flex justify-center">
+                <a
+                  href={site.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View all repositories on GitHub (opens in new tab)`}
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                >
+                  <Github size={15} aria-hidden />
+                  View All on GitHub
+                  <ExternalLink size={13} aria-hidden />
+                </a>
+              </div>
+            </>
           )}
         </div>
       </div>

@@ -49,7 +49,10 @@ export function AskAiChat() {
 
       if (!res.ok || !res.body) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Something went wrong.");
+        throw new Error(
+          data.error ||
+            "Something went wrong — please try again or contact Muhammad directly at get.muhammad5@gmail.com",
+        );
       }
 
       const reader = res.body.getReader();
@@ -109,7 +112,13 @@ export function AskAiChat() {
         </span>
       </div>
 
-      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+      <div
+        ref={scrollRef}
+        className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+        role="log"
+        aria-live="polite"
+        aria-label="Chat conversation with Muhammad's AI assistant"
+      >
         {messages.map((m, i) => (
           <div
             key={i}
@@ -169,18 +178,24 @@ export function AskAiChat() {
           }}
           className="flex items-center gap-2 rounded-xl border border-white/10 bg-background/60 px-3 py-2 focus-within:border-white/25"
         >
+          <label htmlFor="ask-ai-input" className="sr-only">
+            Ask a question about Muhammad
+          </label>
           <input
+            id="ask-ai-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask anything…"
+            autoComplete="off"
             className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
           <button
             type="submit"
+            aria-label="Send message"
             disabled={loading || !input.trim()}
-            className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-primary text-white transition-opacity disabled:opacity-40"
+            className="grid h-11 w-11 place-items-center rounded-lg bg-gradient-primary text-white transition-opacity disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
           >
-            <Send size={14} />
+            <Send size={14} aria-hidden />
           </button>
         </form>
       </div>
