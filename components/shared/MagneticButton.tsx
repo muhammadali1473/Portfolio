@@ -33,8 +33,8 @@ const variantStyles: Record<Variant, string> = {
   primary:
     "text-white shadow-glow bg-gradient-primary hover:shadow-glow-lg hover:brightness-110",
   outline:
-    "text-white border border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/25",
-  ghost: "text-white hover:bg-white/5",
+    "text-foreground border border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/25",
+  ghost: "text-foreground hover:bg-white/5",
 };
 
 const sizeStyles = {
