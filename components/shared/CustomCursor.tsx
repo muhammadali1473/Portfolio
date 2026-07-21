@@ -30,10 +30,21 @@ export function CustomCursor() {
   return (
     <motion.div
       aria-hidden
-      style={{ x: sx, y: sy }}
-      className="pointer-events-none fixed left-0 top-0 z-[60] -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
+      style={{ x: sx, y: sy, willChange: "transform" }}
+      className="pointer-events-none fixed left-0 top-0 z-[60] -translate-x-1/2 -translate-y-1/2"
     >
-      <div className="h-64 w-64 rounded-full bg-gradient-primary opacity-[0.09] blur-3xl" />
+      {/* A radial gradient, not a blurred circle. `blur-3xl` is a CSS filter,
+          and the browser re-ran a 64px gaussian blur over a 256px element on
+          every mouse move. The gradient paints the same soft glow for free.
+          mix-blend-screen was dropped for the same reason — blend modes force
+          the whole stacking context to recomposite each frame. */}
+      <div
+        className="h-56 w-56 rounded-full opacity-[0.13]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(139,92,246,1) 0%, rgba(59,130,246,0.55) 45%, rgba(6,182,212,0) 70%)",
+        }}
+      />
     </motion.div>
   );
 }

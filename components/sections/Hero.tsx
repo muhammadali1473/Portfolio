@@ -7,15 +7,7 @@ import { ArrowRight, Calendar } from "lucide-react";
 import { HERO_STATS } from "@/lib/constants";
 import { MagneticButton } from "@/components/shared/MagneticButton";
 import { GradientText } from "@/components/shared/GradientText";
-
-const HeroCrystal = dynamic(() => import("@/components/three/HeroCrystal"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="h-52 w-52 rounded-full bg-gradient-primary opacity-30 blur-3xl" />
-    </div>
-  ),
-});
+import { HeroPortrait } from "@/components/shared/HeroPortrait";
 
 const ParticleNetwork = dynamic(() => import("@/components/three/ParticleNetwork"), {
   ssr: false,
@@ -101,10 +93,10 @@ export function Hero() {
             transition={{ delay: 0.9, duration: 0.6 }}
             className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
           >
-            <MagneticButton href="#projects" size="lg" icon={<ArrowRight size={16} />}>
+            <MagneticButton href="/projects" size="lg" icon={<ArrowRight size={16} />}>
               View My Work
             </MagneticButton>
-            <MagneticButton href="#contact" variant="outline" size="lg" icon={<Calendar size={16} />}>
+            <MagneticButton href="/contact" variant="outline" size="lg" icon={<Calendar size={16} />}>
               Book a Free Call
             </MagneticButton>
           </motion.div>
@@ -131,9 +123,9 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <div className="relative mx-auto aspect-square w-full max-w-md lg:max-w-none">
+        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <div className="absolute inset-0 -z-10 rounded-[3rem] bg-gradient-primary opacity-20 blur-3xl" />
-          <HeroCrystal />
+          <HeroPortrait />
         </div>
       </div>
 

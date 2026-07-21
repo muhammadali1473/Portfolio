@@ -1,17 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Cpu,
-  Gauge,
-  GitBranch,
-  Lock,
-  Plug,
-  ShieldCheck,
-  Sparkles,
-  Workflow,
-  Zap,
-} from "lucide-react";
+import { Plug, Sparkles } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { cn } from "@/lib/utils";
@@ -66,36 +56,6 @@ const MCPS: McpCard[] = [
   },
 ];
 
-const METRICS = [
-  { icon: Cpu, label: "MCP Servers Shipped", value: "2" },
-  { icon: Plug, label: "Tools Exposed", value: "14+" },
-  { icon: Gauge, label: "Avg Tool Latency", value: "< 220ms" },
-  { icon: ShieldCheck, label: "Protocol Compliance", value: "MCP v1.0" },
-] as const;
-
-const BENEFITS = [
-  {
-    icon: Workflow,
-    title: "Standardized",
-    body: "Speaks the Model Context Protocol — works with any compatible client.",
-  },
-  {
-    icon: Zap,
-    title: "Composable",
-    body: "Chain multiple MCPs so a single agent can touch Slack, LinkedIn, CRMs at once.",
-  },
-  {
-    icon: Lock,
-    title: "Secure by default",
-    body: "Scoped credentials per tool. Zero secrets in prompts.",
-  },
-  {
-    icon: GitBranch,
-    title: "Model-agnostic",
-    body: "Swap Claude, GPT, Llama, or Mistral without touching the server.",
-  },
-];
-
 export function McpExpertise() {
   return (
     <section id="mcp" className="relative py-28">
@@ -110,58 +70,13 @@ export function McpExpertise() {
           subtitle="Giving AI agents secure, typed tools for the real world. Here's what that looks like."
         />
 
-        {/* Metric strip */}
-        <div className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {METRICS.map((m, i) => (
-            <Reveal key={m.label} delay={i * 0.06}>
-              <div className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-surface/40 p-4 backdrop-blur">
-                <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gradient-primary opacity-10 blur-2xl" />
-                <div className="flex items-center gap-2">
-                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-primary text-white shadow-glow">
-                    <m.icon size={15} />
-                  </span>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
-                    {m.label}
-                  </span>
-                </div>
-                <p className="mt-3 text-3xl font-bold tracking-tight">{m.value}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
         {/* MCP server cards — full-width 2-col grid */}
-        <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {MCPS.map((mcp, i) => (
             <Reveal key={mcp.id} delay={i * 0.08}>
               <McpServerCard mcp={mcp} index={i} />
             </Reveal>
           ))}
-        </div>
-
-        {/* Benefits */}
-        <div className="mt-12">
-          <div className="mb-4 flex items-center gap-3">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
-              Why clients choose MCP
-            </span>
-            <span className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {BENEFITS.map((b, i) => (
-              <Reveal key={b.title} delay={i * 0.05}>
-                <div className="h-full rounded-2xl border border-white/10 bg-surface/40 p-4 backdrop-blur transition-colors hover:border-white/20">
-                  <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow">
-                    <b.icon size={16} />
-                  </div>
-                  <p className="mt-3 text-sm font-semibold">{b.title}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                    {b.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
 
         {/* CTA */}
@@ -182,7 +97,7 @@ export function McpExpertise() {
               </div>
             </div>
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center rounded-full bg-gradient-primary px-5 py-2 text-sm font-semibold text-white shadow-glow hover:brightness-110"
             >
               Start a conversation →

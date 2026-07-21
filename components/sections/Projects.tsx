@@ -7,7 +7,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { useState, type MouseEvent } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import { ExternalLink, Github, X } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { StatusBadge } from "@/components/shared/StatusBadge";
@@ -23,20 +23,31 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
   const rotX = useTransform(srx, (v) => `${v}deg`);
   const rotY = useTransform(sry, (v) => `${v}deg`);
 
+  // Cache the card's box on enter. Reading getBoundingClientRect() inside
+  // mousemove forces a synchronous layout on every single event, which is what
+  // made hovering the project grid feel heavy.
+  const rect = useRef<DOMRect | null>(null);
+
+  const onEnter = (e: MouseEvent<HTMLDivElement>) => {
+    rect.current = e.currentTarget.getBoundingClientRect();
+  };
   const onMove = (e: MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    const r = rect.current;
+    if (!r) return;
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
     rx.set(py * -6);
     ry.set(px * 8);
   };
   const onLeave = () => {
+    rect.current = null;
     rx.set(0);
     ry.set(0);
   };
 
   return (
     <motion.div
+      onMouseEnter={onEnter}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}

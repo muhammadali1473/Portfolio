@@ -27,16 +27,17 @@ export function Services() {
                 transition={{ type: "spring", stiffness: 260, damping: 22 }}
                 className="h-full p-6 sm:p-8"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <motion.div
-                    whileHover={{ rotate: 12, scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 18 }}
-                    className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow"
-                  >
-                    <service.icon size={22} strokeWidth={2} />
-                  </motion.div>
-                  <span className="text-2xl opacity-70">{service.emoji}</span>
-                </div>
+                <motion.div
+                  whileHover={{ rotate: 12, scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 18 }}
+                  className="grid h-12 w-12 place-items-center rounded-xl border border-white/10"
+                  style={{
+                    backgroundColor: `#${service.tint}1f`,
+                    color: `#${service.tint}`,
+                  }}
+                >
+                  <service.icon size={22} strokeWidth={2} />
+                </motion.div>
 
                 <h3 className="mt-6 text-xl font-semibold tracking-tight">
                   {service.title}
@@ -57,7 +58,7 @@ export function Services() {
                 </div>
 
                 <Link
-                  href="#contact"
+                  href="/contact"
                   className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
                 >
                   Learn More

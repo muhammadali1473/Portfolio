@@ -28,7 +28,7 @@ export function ScrollToTop() {
           exit={{ opacity: 0, y: 16, scale: 0.9 }}
           whileHover={{ y: -2 }}
           transition={{ duration: 0.25 }}
-          className="fixed bottom-6 right-6 z-40 grid h-12 w-12 place-items-center rounded-full border border-white/15 bg-background/70 text-foreground shadow-glow backdrop-blur-xl hover:border-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          className="fixed bottom-6 left-6 z-40 grid h-12 w-12 place-items-center rounded-full border border-white/15 bg-background/70 text-foreground shadow-glow backdrop-blur-xl hover:border-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
         >
           <ArrowUp size={18} aria-hidden />
         </motion.button>

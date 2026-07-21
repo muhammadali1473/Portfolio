@@ -1,38 +1,29 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 
+/**
+ * One entry per real route. Hash fragments are not separate URLs to a crawler,
+ * so the old "/#projects"-style entries were never indexable on their own.
+ */
+const routes: { path: string; priority: number; changeFrequency: "weekly" | "monthly" }[] = [
+  { path: "", priority: 1, changeFrequency: "weekly" },
+  { path: "/projects", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/services", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/mcp", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/about", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/pricing", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/clients", priority: 0.75, changeFrequency: "monthly" },
+  { path: "/ai-demo", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/github", priority: 0.7, changeFrequency: "weekly" },
+  { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  return [
-    {
-      url: site.url,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${site.url}/#projects`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${site.url}/#services`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${site.url}/#pricing`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${site.url}/#contact`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-  ];
+  return routes.map(({ path, priority, changeFrequency }) => ({
+    url: `${site.url}${path}`,
+    lastModified: now,
+    changeFrequency,
+    priority,
+  }));
 }

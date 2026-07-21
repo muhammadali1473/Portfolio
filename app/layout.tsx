@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Navigation } from "@/components/sections/Navigation";
+import { Footer } from "@/components/sections/Footer";
+import { ChatWidget } from "@/components/ai/ChatWidget";
 import { ScrollProgress } from "@/components/shared/ScrollProgress";
 import { CustomCursor } from "@/components/shared/CustomCursor";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
@@ -71,7 +73,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: { canonical: site.url },
+  // Relative to metadataBase. Every page under app/ overrides this with its own
+  // path — without that, all nine routes would claim to be the homepage.
+  alternates: { canonical: "/" },
 };
 
 export const viewport: Viewport = {
@@ -142,7 +146,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CustomCursor />
           <Navigation />
           <main id="main-content">{children}</main>
+          <Footer />
           <ScrollToTop />
+          <ChatWidget />
         </ThemeProvider>
         <script
           type="application/ld+json"

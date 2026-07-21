@@ -56,21 +56,25 @@ export default function ParticleNetwork() {
         if (p.x < 0 || p.x > width) p.vx *= -1;
         if (p.y < 0 || p.y > height) p.vy *= -1;
       }
+      // Link pass. Two deliberate optimisations here:
+      //  1. Compare squared distances so the inner loop never calls sqrt.
+      //  2. Use a flat stroke colour instead of a per-line gradient. Building a
+      //     CanvasGradient for every line on every frame was the single most
+      //     expensive thing on the page, and on a 0.6px line the gradient was
+      //     indistinguishable from a solid colour anyway.
       const maxDist = 130;
+      const maxDistSq = maxDist * maxDist;
+      ctx.lineWidth = 0.6;
       for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
-          const a = particles[i];
           const b = particles[j];
           const dx = a.x - b.x;
           const dy = a.y - b.y;
-          const d = Math.hypot(dx, dy);
-          if (d < maxDist) {
-            const alpha = (1 - d / maxDist) * 0.35;
-            const grd = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
-            grd.addColorStop(0, `rgba(139,92,246,${alpha})`);
-            grd.addColorStop(1, `rgba(6,182,212,${alpha})`);
-            ctx.strokeStyle = grd;
-            ctx.lineWidth = 0.6;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < maxDistSq) {
+            const alpha = (1 - Math.sqrt(distSq) / maxDist) * 0.35;
+            ctx.strokeStyle = `rgba(99,132,229,${alpha})`;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);

@@ -2,14 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  ExternalLink,
-  GitFork,
-  Github,
-  Info,
-  Loader2,
-  Star,
-} from "lucide-react";
+import { ExternalLink, GitFork, Info, Loader2, Star } from "lucide-react";
+// The real Octocat, not lucide's stylised outline of it.
+import { GitHubIcon as Github } from "@/components/shared/SocialIcons";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { site } from "@/lib/site";
@@ -73,7 +68,9 @@ export function GitHubRepos() {
         <Reveal className="mt-12">
           <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-surface/40 p-5 backdrop-blur sm:p-6">
             <div className="flex items-center gap-4">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow">
+              {/* GitHub's brand colour is near-black, so the tile follows the
+                  theme foreground rather than painting an invisible logo. */}
+              <div className="grid h-12 w-12 place-items-center rounded-xl border border-white/10 bg-white/5 text-foreground">
                 <Github size={22} aria-hidden />
               </div>
               <div>

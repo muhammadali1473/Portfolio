@@ -8,20 +8,105 @@ import {
   Rocket,
   Handshake,
   Sparkles,
+  DollarSign,
+  Mail,
+  User,
   type LucideIcon,
 } from "lucide-react";
+import type { ComponentType } from "react";
+import { GitHubIcon } from "@/components/shared/SocialIcons";
 
-export const NAV_LINKS = [
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#projects", label: "Projects" },
-  { href: "#mcp", label: "MCP" },
-  { href: "#client-work", label: "Clients" },
-  { href: "#github", label: "GitHub" },
-  { href: "#ai-demo", label: "AI Demo" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#contact", label: "Contact" },
-] as const;
+/**
+ * Every nav destination is a real route. `blurb` and `icon` are used by the
+ * homepage card grid; the nav and footer only read `href` and `label`.
+ */
+export type NavLink = {
+  href: string;
+  label: string;
+  blurb: string;
+  /** Any icon component taking size/className — lucide glyphs or our own
+   *  brand SVGs, so real logos can sit alongside generic icons. */
+  icon: ComponentType<{ size?: string | number; className?: string }>;
+  /** Hex (no #) used to tint this card's icon tile, so the grid reads as nine
+   *  distinct topics rather than nine identical blue squares. GitHub uses its
+   *  real brand black, which the card renders as theme foreground. */
+  tint: string;
+};
+
+export const NAV_LINKS: NavLink[] = [
+  {
+    href: "/about",
+    label: "About",
+    blurb: "My journey, what I build, and the stack I reach for.",
+    icon: User,
+    tint: "8B5CF6",
+  },
+  {
+    href: "/services",
+    label: "Services",
+    blurb: "What I offer and how a project runs start to finish.",
+    icon: Zap,
+    tint: "F59E0B",
+  },
+  {
+    href: "/projects",
+    label: "Projects",
+    blurb: "Selected work — AI agents, web apps, and iOS builds.",
+    icon: Rocket,
+    tint: "F43F5E",
+  },
+  {
+    href: "/mcp",
+    label: "MCP",
+    blurb: "Model Context Protocol servers, my specialty.",
+    icon: Plug,
+    tint: "06B6D4",
+  },
+  {
+    href: "/clients",
+    label: "Clients",
+    blurb: "Client engagements and what they had to say.",
+    icon: Handshake,
+    tint: "10B981",
+  },
+  {
+    href: "/github",
+    label: "GitHub",
+    blurb: "Open-source repositories, pulled live from GitHub.",
+    icon: GitHubIcon,
+    tint: "181717",
+  },
+  {
+    href: "/ai-demo",
+    label: "AI Demo",
+    blurb: "Try the AI assistant and project estimator yourself.",
+    icon: Bot,
+    tint: "3B82F6",
+  },
+  {
+    href: "/pricing",
+    label: "Pricing",
+    blurb: "Transparent packages and engagement models.",
+    icon: DollarSign,
+    tint: "22C55E",
+  },
+  {
+    href: "/contact",
+    label: "Contact",
+    blurb: "Tell me about your project — I reply within a day.",
+    icon: Mail,
+    tint: "0EA5E9",
+  },
+];
+
+/**
+ * Header/footer menu. Home is prepended here rather than added to NAV_LINKS so
+ * the homepage card grid doesn't render a card pointing at itself.
+ */
+export const HEADER_LINKS: { href: string; label: string }[] = [
+  { href: "/", label: "Home" },
+  ...NAV_LINKS.map(({ href, label }) => ({ href, label })),
+];
 
 export type HeroStat = { value: string; label: string };
 
@@ -101,7 +186,7 @@ export const TECH_STACK: TechCategory[] = [
       { name: "AWS", level: 4, brand: "aws" },
       { name: "Vercel", level: 5, brand: "vercel" },
       { name: "Docker", level: 4, brand: "docker" },
-      { name: "GitHub Actions", level: 4, brand: "github" },
+      { name: "GitHub Actions", level: 4, brand: "githubactions" },
     ],
   },
   {
@@ -116,60 +201,62 @@ export const TECH_STACK: TechCategory[] = [
 
 export type Service = {
   icon: LucideIcon;
-  emoji: string;
   title: string;
   description: string;
   tags: string[];
+  /** Hex (no #) tint for this card's icon tile — same idea as NavLink.tint,
+   *  so six services don't read as six identical blue squares. */
+  tint: string;
 };
 
 export const SERVICES: Service[] = [
   {
     icon: Bot,
-    emoji: "🤖",
     title: "AI Agents & Chatbots",
     description:
       "Custom AI assistants trained on your business — handle customer support, lead qualification, and FAQ automation 24/7.",
     tags: ["Chatbots", "Agents", "Support"],
+    tint: "8B5CF6",
   },
   {
     icon: Plug,
-    emoji: "🔗",
     title: "MCP Server Development",
     description:
       "Custom MCP (Model Context Protocol) servers that connect AI to LinkedIn, X/Twitter, CRMs, social media, and internal tools.",
     tags: ["MCP", "Protocol", "Integrations"],
+    tint: "06B6D4",
   },
   {
     icon: Globe,
-    emoji: "🌐",
     title: "Modern Web Apps",
     description:
       "High-performance websites and web applications built with Next.js, React, and cutting-edge tech.",
     tags: ["Next.js", "React", "SaaS"],
+    tint: "3B82F6",
   },
   {
     icon: Smartphone,
-    emoji: "📱",
     title: "Mobile Apps",
     description:
       "iOS and cross-platform mobile apps. Two live on the App Store — Swipi and SpendWise. Fast, polished, approved.",
     tags: ["iOS", "React Native", "App Store"],
+    tint: "F43F5E",
   },
   {
     icon: Zap,
-    emoji: "⚡",
     title: "Business Automation",
     description:
       "Automate social posting, email outreach, and data processing — saving 20+ hours of manual work every week.",
     tags: ["Automation", "Workflows", "Ops"],
+    tint: "F59E0B",
   },
   {
     icon: Code2,
-    emoji: "🔧",
     title: "API Integration",
     description:
       "Connect your tools — Stripe, Twilio, OpenAI, custom APIs. I make your systems talk to each other.",
     tags: ["APIs", "Stripe", "Webhooks"],
+    tint: "10B981",
   },
 ];
 
@@ -345,7 +432,7 @@ export const PRICING: PricingPackage[] = [
   {
     id: "starter",
     name: "Starter",
-    priceUSD: 1500,
+    priceUSD: 500,
     deliveryWeeks: "2 weeks",
     badge: "Perfect for Solopreneurs",
     cta: "Get Started",
@@ -360,7 +447,7 @@ export const PRICING: PricingPackage[] = [
   {
     id: "professional",
     name: "Professional",
-    priceUSD: 4000,
+    priceUSD: 1200,
     deliveryWeeks: "4 weeks",
     badge: "Most Popular",
     popular: true,
@@ -378,7 +465,7 @@ export const PRICING: PricingPackage[] = [
   {
     id: "premium",
     name: "Premium",
-    priceUSD: 8000,
+    priceUSD: 2500,
     deliveryWeeks: "6–8 weeks",
     badge: "Best Value",
     cta: "Get Started",
@@ -396,7 +483,7 @@ export const PRICING: PricingPackage[] = [
   {
     id: "enterprise",
     name: "Enterprise",
-    priceUSD: 15000,
+    priceUSD: 5000,
     priceLabel: "From",
     deliveryWeeks: "10–12 weeks",
     badge: "Full Digital Transformation",

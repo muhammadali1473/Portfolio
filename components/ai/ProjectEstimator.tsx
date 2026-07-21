@@ -14,14 +14,14 @@ type Estimate = {
 
 const PROJECT_TYPES = ["Website", "AI Chatbot", "MCP Server", "Mobile App", "Automation", "Other"];
 const TIMELINES = ["ASAP", "1 month", "2-3 months", "Flexible"];
-const BUDGETS = ["< $1K", "$1K–5K", "$5K–10K", "$10K–20K", "$20K+"];
+const BUDGETS = ["< $500", "$500–1K", "$1K–2.5K", "$2.5K–5K", "$5K+"];
 
 export function ProjectEstimator() {
   const [form, setForm] = useState({
     projectType: "AI Chatbot",
     complexity: 3,
     timeline: "1 month",
-    budget: "$5K–10K",
+    budget: "$1K–2.5K",
     description: "",
   });
   const [loading, setLoading] = useState(false);
@@ -196,7 +196,7 @@ export function ProjectEstimator() {
               </ul>
             </div>
             <a
-              href="#contact"
+              href="/contact"
               aria-label="Contact Muhammad about this estimate"
               className="mt-5 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 text-sm font-semibold text-white shadow-glow transition-all hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
             >

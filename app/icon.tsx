@@ -14,16 +14,17 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
+          background: "#0A0A0F",
           color: "#ffffff",
           fontFamily: "system-ui, sans-serif",
           fontWeight: 800,
-          fontSize: "18px",
-          letterSpacing: "-0.03em",
+          fontSize: "17px",
+          letterSpacing: "-0.06em",
           borderRadius: "6px",
         }}
       >
-        MA
+        <span>M</span>
+        <span style={{ color: "#3B82F6" }}>K</span>
       </div>
     ),
     size,

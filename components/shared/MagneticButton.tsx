@@ -59,15 +59,23 @@ export function MagneticButton(props: MagneticButtonProps) {
   const tx = useTransform(sx, (v) => `${v}px`);
   const ty = useTransform(sy, (v) => `${v}px`);
 
+  // Measured once on enter rather than on every move — reading layout inside a
+  // mousemove handler forces a synchronous reflow per event.
+  const rectRef = useRef<DOMRect | null>(null);
+
+  const handleMouseEnter = () => {
+    if (ref.current) rectRef.current = ref.current.getBoundingClientRect();
+  };
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
+    const rect = rectRef.current;
+    if (!rect) return;
     const relX = e.clientX - rect.left - rect.width / 2;
     const relY = e.clientY - rect.top - rect.height / 2;
     x.set(relX * 0.25);
     y.set(relY * 0.25);
   };
   const handleMouseLeave = () => {
+    rectRef.current = null;
     x.set(0);
     y.set(0);
   };
@@ -92,6 +100,7 @@ export function MagneticButton(props: MagneticButtonProps) {
         target={props.target}
         rel={props.rel}
         onClick={props.onClick}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         className={classes}
@@ -112,6 +121,7 @@ export function MagneticButton(props: MagneticButtonProps) {
   return (
     <button
       ref={ref as React.RefObject<HTMLButtonElement>}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={classes}

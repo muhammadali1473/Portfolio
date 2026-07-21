@@ -1,4 +1,7 @@
 import type { Config } from "tailwindcss";
+// Static import, not require(). Node 24 loads this .ts config as an ES module,
+// where `require` is not defined — a bare require() here crashes the CSS build.
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
   darkMode: "class",
@@ -127,7 +130,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 };
 
 export default config;

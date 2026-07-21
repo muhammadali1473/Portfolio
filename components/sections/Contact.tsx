@@ -3,19 +3,21 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Briefcase,
   Calendar,
   CheckCircle2,
   Clock,
-  Github,
   Loader2,
   Mail,
-  MessageCircle,
   Send,
   AlertCircle,
-  Linkedin,
-  Twitter,
 } from "lucide-react";
+import {
+  WhatsAppIcon,
+  LinkedInIcon,
+  XIcon,
+  GitHubIcon,
+  UpworkIcon,
+} from "@/components/shared/SocialIcons";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { site, socials, telLink, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -29,7 +31,17 @@ const PROJECT_TYPES = [
   "Other",
 ] as const;
 
-const BUDGETS = ["< $1K", "$1K–5K", "$5K–10K", "$10K–20K", "$20K+"] as const;
+const BUDGETS = ["< $500", "$500–1K", "$1K–2.5K", "$2.5K–5K", "$5K+"] as const;
+
+/** Solid brand-coloured buttons. No addresses or numbers rendered as text. */
+const DIRECT_CHANNELS = [
+  { label: "WhatsApp", href: whatsappLink() || telLink(), Icon: WhatsAppIcon, hex: "25D366" },
+  { label: "Email", href: `mailto:${socials.email}`, Icon: Mail, hex: "0EA5E9" },
+  { label: "LinkedIn", href: socials.linkedin, Icon: LinkedInIcon, hex: "0A66C2" },
+  { label: "X", href: socials.x, Icon: XIcon, hex: "000000" },
+  { label: "GitHub", href: socials.github, Icon: GitHubIcon, hex: "181717" },
+  { label: "Upwork", href: socials.upwork, Icon: UpworkIcon, hex: "14A800" },
+];
 
 type Form = {
   name: string;
@@ -44,7 +56,7 @@ const emptyForm: Form = {
   name: "",
   email: "",
   company: "",
-  budget: "$5K–10K",
+  budget: "$1K–2.5K",
   projectTypes: [],
   message: "",
 };
@@ -232,53 +244,35 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="flex flex-col gap-3"
           >
-            <ContactCard
-              icon={<Mail size={18} />}
-              label="Gmail"
-              value={socials.email}
-              href={`mailto:${socials.email}`}
-            />
-            <ContactCard
-              icon={<MessageCircle size={18} />}
-              label="WhatsApp / Call"
-              value={site.phone}
-              href={whatsappLink() || telLink()}
-              external
-              highlight
-            />
-            <ContactCard
-              icon={<Linkedin size={18} />}
-              label="LinkedIn"
-              value="@muhammad-ali"
-              href={socials.linkedin}
-              external
-            />
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <ContactCard
-                icon={<Twitter size={16} />}
-                label="X"
-                value={site.xHandle}
-                href={socials.x}
-                external
-                compact
-              />
-              <ContactCard
-                icon={<Github size={16} />}
-                label="GitHub"
-                value={`@${site.githubUsername}`}
-                href={socials.github}
-                external
-                compact
-              />
-              <ContactCard
-                icon={<Briefcase size={16} />}
-                label="Upwork"
-                value="Profile"
-                href={socials.upwork}
-                external
-                compact
-              />
+            {/* Icons only — the address and phone number are deliberately not
+                printed here. Tapping a button opens that channel directly, so
+                the details stay out of reach of scrapers. */}
+            <div className="rounded-2xl border border-white/10 bg-surface/40 p-6 backdrop-blur">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                Reach me directly
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {DIRECT_CHANNELS.map(({ label, href, Icon, hex }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${label} (opens in new tab)`}
+                    title={label}
+                    className="grid h-12 w-12 place-items-center rounded-full border border-white/15 text-white shadow-sm transition-all hover:-translate-y-1 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                    style={{ backgroundColor: `#${hex}` }}
+                  >
+                    <Icon size={20} />
+                  </a>
+                ))}
+              </div>
+              <p className="mt-5 text-sm text-muted-foreground">
+                WhatsApp is fastest — tap the green button and it opens a chat
+                with me straight away.
+              </p>
             </div>
+
             {socials.calendly && (
               <ContactCard
                 icon={<Calendar size={18} />}

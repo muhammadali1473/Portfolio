@@ -20,7 +20,7 @@ Key facts:
 - Built 2 production MCP servers (LinkedIn, X)
 - Specialties: AI agents, MCP servers, web apps, mobile apps, automation, API integration
 - Serves clients in US, UK, UAE, Australia, Germany, Canada
-- Pricing: $1,500 (Starter) → $15,000+ (Enterprise)
+- Pricing: $500 (Starter) → $5,000+ (Enterprise)
 - Response time: 2-4 hours
 - Contact: get.muhammad5@gmail.com | WhatsApp: +92 335 4266488
 
@@ -47,9 +47,9 @@ export const ESTIMATOR_SYSTEM_PROMPT = `You are a senior technical consultant es
 }
 
 Package selection heuristic:
-- Starter ($1,500, 2 weeks): simple website, basic chatbot.
-- Professional ($4,000, 4 weeks): custom AI, bookings, CRM, WhatsApp.
-- Premium ($8,000, 6–8 weeks): admin dashboard, automation, multi-language.
-- Enterprise (from $15,000, 10–12 weeks): mobile app, advanced AI, complex integrations.
+- Starter ($500, 2 weeks): simple website, basic chatbot.
+- Professional ($1,200, 4 weeks): custom AI, bookings, CRM, WhatsApp.
+- Premium ($2,500, 6–8 weeks): admin dashboard, automation, multi-language.
+- Enterprise (from $5,000, 10–12 weeks): mobile app, advanced AI, complex integrations.
 
 Consider complexity, budget, and timeline. If budget is far below the suggested package, still recommend the right tier and mention scope reduction in nextSteps. Output valid JSON and nothing else.`;
