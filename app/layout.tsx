@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Navigation } from "@/components/sections/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { ChatWidget } from "@/components/ai/ChatWidget";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ScrollProgress } from "@/components/shared/ScrollProgress";
 import { CustomCursor } from "@/components/shared/CustomCursor";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
@@ -119,6 +120,15 @@ const personJsonLd = {
   ],
 };
 
+// Google Tag Manager. Overridable per-environment; set NEXT_PUBLIC_GTM_ID to ""
+// to switch it off entirely. Only loaded in production builds so local
+// development doesn't pollute your analytics with your own page views.
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-5ZCTX5TT";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-T2WHTT7P3C";
+const isProd = process.env.NODE_ENV === "production";
+const gtmEnabled = isProd && Boolean(GTM_ID);
+const gaEnabled = isProd && Boolean(GA_ID);
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -129,6 +139,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
+      {gtmEnabled && <GoogleTagManager gtmId={GTM_ID} />}
+      {gaEnabled && <GoogleAnalytics gaId={GA_ID} />}
       <body
         className="min-h-screen bg-background font-sans text-foreground antialiased"
         suppressHydrationWarning
