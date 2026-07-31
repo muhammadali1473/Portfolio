@@ -4,7 +4,7 @@ Full-stack developer and AI specialist. This is my personal portfolio site — a
 
 **Live:** https://muhammadali.dev _(coming soon)_
    
-## What's inside  
+## What's inside    
 
 - **13 sections**: Hero, About, Tech Stack, Services, Featured Work, MCP Expertise, Client Dashboard, GitHub public repos, AI Live Demo, Pricing, Process, Testimonials, Contact
 - **Two live AI widgets** powered by Groq (Llama 3.3 70B):
