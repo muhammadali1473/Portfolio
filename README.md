@@ -16,7 +16,7 @@ Full-stack developer and AI specialist. This is my personal portfolio site — a
 - **Dynamic Open Graph image** generated at the edge   
 - **Branded project mockups** per project — no stock images
 - **Full SEO**: JSON-LD Person schema, sitemap, robots, metadata API
-- **Resend-backed contact form** that degrades gracefully if the API key isn't set
+- **Resend-backed contact form** that degrades gracefully if the API key isn't set  
 
 ## Stack
 
