@@ -13,7 +13,7 @@ Full-stack developer and AI specialist. This is my personal portfolio site — a
 - **GitHub repos** fetched live from the REST API, private filtered server-side
 - **Day / Night theme toggle** with no-flash hydration
 - **CSS-only 3D hero crystal** with mouse parallax
-- **Dynamic Open Graph image** generated at the edge
+- **Dynamic Open Graph image** generated at the edge   
 - **Branded project mockups** per project — no stock images
 - **Full SEO**: JSON-LD Person schema, sitemap, robots, metadata API
 - **Resend-backed contact form** that degrades gracefully if the API key isn't set
