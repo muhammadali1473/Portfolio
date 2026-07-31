@@ -9,7 +9,7 @@ Full-stack developer and AI specialist. This is my personal portfolio site — a
 - **13 sections**: Hero, About, Tech Stack, Services, Featured Work, MCP Expertise, Client Dashboard, GitHub public repos, AI Live Demo, Pricing, Process, Testimonials, Contact
 - **Two live AI widgets** powered by Groq (Llama 3.3 70B):
   - Streaming chat assistant that answers questions about me  
-  - Project estimator that returns structured recommendations in JSON mode  
+  - Project estimator that returns structured recommendations in JSON mode    
 - **GitHub repos** fetched live from the REST API, private filtered server-side         
 - **Day / Night theme toggle** with no-flash hydration     
 - **CSS-only 3D hero crystal** with mouse parallax
