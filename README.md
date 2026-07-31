@@ -11,7 +11,7 @@ Full-stack developer and AI specialist. This is my personal portfolio site — a
   - Streaming chat assistant that answers questions about me
   - Project estimator that returns structured recommendations in JSON mode
 - **GitHub repos** fetched live from the REST API, private filtered server-side    
-- **Day / Night theme toggle** with no-flash hydration
+- **Day / Night theme toggle** with no-flash hydration  
 - **CSS-only 3D hero crystal** with mouse parallax
 - **Dynamic Open Graph image** generated at the edge   
 - **Branded project mockups** per project — no stock images
