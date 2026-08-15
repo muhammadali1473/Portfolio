@@ -89,14 +89,6 @@ export const NAV_LINKS: NavLink[] = [
     tint: "181717",
   },
   {
-    href: "/ai-demo",
-    anchor: "/#ai-demo",
-    label: "AI Demo",
-    blurb: "Try the AI assistant and project estimator yourself.",
-    icon: Bot,
-    tint: "4A6285",
-  },
-  {
     href: "/pricing",
     anchor: "/#pricing",
     label: "Pricing",
@@ -310,6 +302,9 @@ export type Project = {
   demoUrl?: string;
   repoUrl?: string;
   thumb: string;
+  /** Screenshot of the live site, served from /public. When set, the card
+   *  renders it instead of the hand-built mock keyed off `thumb`. */
+  image?: string;
 };
 
 export const PROJECTS: Project[] = [
@@ -390,6 +385,65 @@ export const PROJECTS: Project[] = [
     demoUrl:
       "https://apps.apple.com/ae/app/budget-planner-app-spendwise/id6758571585",
     thumb: "spendwise",
+  },
+  /*
+   * Live client sites. Unlike the three concepts below these are shipped and
+   * publicly reachable, so `demoUrl` points at the real domain and the card
+   * shows a screenshot of the actual homepage rather than a mock.
+   */
+  {
+    id: "msn-developments",
+    title: "MSN Developments",
+    summary:
+      "Marketing site for a boutique Dubai real estate developer — project portfolio, media centre, and careers.",
+    description:
+      "Next.js site for MSN Developments, a Dubai-based boutique developer. Cinematic hero, a browsable project portfolio, an industry-insights media centre, and careers and enquiry funnels.",
+    story:
+      "A property developer's site has to sell the address before it sells the apartment, so the build leans on full-bleed imagery and restrained typography under the brand's 'Purpose in Every Detail' line. Alongside the project portfolio sits a media centre that keeps publishing market insights, so the site stays worth returning to between launches.",
+    tech: ["Next.js", "React", "TailwindCSS", "Framer Motion"],
+    status: "shipped",
+    outcome: "Live at msndevelopments.com",
+    client: "MSN Developments (Dubai, UAE)",
+    category: "Client",
+    demoUrl: "https://www.msndevelopments.com/",
+    thumb: "msn-developments",
+    image: "/project-msn-developments.jpg",
+  },
+  {
+    id: "ere-group",
+    title: "Earth Link Real Estate",
+    summary:
+      "Brokerage site for a licensed Dubai agency — property listings, developer directory, and consultation booking.",
+    description:
+      "Next.js site for Earth Link Real Estate (ERE Group), a licensed Dubai brokerage. Featured property listings, a developer directory, market-insight articles, consultation booking, and a newsletter capture.",
+    story:
+      "Brokerage sites live or die on lead capture, so every path — featured listings, the developer directory, the market-insight posts — resolves to booking a consultation. The listing and developer sections are built to be extended as inventory turns over, and the site carries the agency's decade of trading history as the trust signal buyers actually respond to.",
+    tech: ["Next.js", "React", "TailwindCSS"],
+    status: "shipped",
+    outcome: "Live at eregroup.ae",
+    client: "Earth Link Real Estate / ERE Group (Dubai, UAE)",
+    category: "Client",
+    demoUrl: "https://www.eregroup.ae/",
+    thumb: "ere-group",
+    image: "/project-ere-group.jpg",
+  },
+  {
+    id: "shario",
+    title: "Shario",
+    summary:
+      "Trilingual site for a Dubai digital marketing agency — English, Arabic, and Russian, with a services and insights stack.",
+    description:
+      "Next.js site for Shario, a founder-led Dubai marketing agency. Editorial homepage, service breakdown, insights section, and FAQ — served in English, Arabic, and Russian.",
+    story:
+      "Shario sells performance marketing to a Gulf audience that reads in three languages, so EN/AR/RU is a first-class switch rather than an afterthought — and Arabic means the layout has to survive right-to-left. The design goes deliberately editorial: heavy serif display type and a muted palette, positioning the agency as a brand studio rather than another performance shop.",
+    tech: ["Next.js", "React", "TailwindCSS", "i18n (EN/AR/RU)"],
+    status: "shipped",
+    outcome: "Live at shario.ae",
+    client: "Shario (Dubai, UAE)",
+    category: "Client",
+    demoUrl: "https://www.shario.ae/",
+    thumb: "shario",
+    image: "/project-shario.jpg",
   },
   {
     id: "dubai-real-estate",
@@ -648,8 +702,19 @@ export const ASSISTANT_QUICK_PROMPTS: AssistantQuickPrompt[] = [
 export const VALUES_ICON = Sparkles;
 
 // Curated ordering helpers
-export const FEATURED_PROJECTS = PROJECTS.filter((p) =>
-  ["linkedin-mcp", "x-mcp-builder", "swipi", "spendwise"].includes(p.id),
-);
+/** Ordered by `map`, not `filter`, so the running order is this list — live
+ *  client sites lead, since shipped work for a paying client is the strongest
+ *  proof on the page. */
+export const FEATURED_PROJECTS = [
+  "msn-developments",
+  "ere-group",
+  "shario",
+  "linkedin-mcp",
+  "x-mcp-builder",
+  "swipi",
+  "spendwise",
+]
+  .map((id) => PROJECTS.find((p) => p.id === id))
+  .filter((p): p is Project => Boolean(p));
 
 export const CLIENT_DELIVERABLES = PROJECTS.filter((p) => p.category === "Client");

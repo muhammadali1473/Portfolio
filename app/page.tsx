@@ -8,7 +8,6 @@ import { McpExpertise } from "@/components/sections/McpExpertise";
 import { ClientWork } from "@/components/sections/ClientWork";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { GitHubRepos } from "@/components/sections/GitHubRepos";
-import { AiDemo } from "@/components/sections/AiDemo";
 import { Pricing } from "@/components/sections/Pricing";
 import { Contact } from "@/components/sections/Contact";
 
@@ -32,7 +31,6 @@ export default function HomePage() {
       <ClientWork />
       <Testimonials />
       <GitHubRepos />
-      <AiDemo />
       <Pricing />
       <Contact />
     </>

@@ -58,7 +58,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
           <div className="absolute inset-0 bg-gradient-primary-soft" />
         </div>
 
-        <ProjectThumb slug={project.thumb} title={project.title} />
+        <ProjectThumb slug={project.thumb} title={project.title} image={project.image} />
 
         <div className="mt-5 flex items-start justify-between gap-4">
           <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
@@ -150,7 +150,7 @@ function ProjectModal({
             >
               <X size={16} />
             </button>
-            <ProjectThumb slug={project.thumb} title={project.title} />
+            <ProjectThumb slug={project.thumb} title={project.title} image={project.image} />
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <StatusBadge status={project.status} />
               <span className="text-sm text-muted-foreground">{project.outcome}</span>

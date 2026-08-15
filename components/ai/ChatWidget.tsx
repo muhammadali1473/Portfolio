@@ -7,7 +7,8 @@ import { AskAiChat } from "@/components/ai/AskAiChat";
 
 /**
  * Site-wide floating assistant. Rendered from the root layout so it is present
- * on every page, not just /ai-demo.
+ * on every page — and since the AI demo section was removed, this is now the
+ * only place the assistant lives.
  *
  * The chat itself is only mounted once opened — keeping it unmounted means no
  * chat JS work happens on pages nobody opens it on.

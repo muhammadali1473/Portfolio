@@ -21,10 +21,15 @@ type MockProps = { title: string };
 export function ProjectThumb({
   slug,
   title,
+  image,
   className,
 }: {
   slug: string;
   title: string;
+  /** Real screenshot of a shipped site. Takes precedence over the hand-built
+   *  mock — for live client work the actual page is more convincing than a
+   *  stylised approximation of it. */
+  image?: string;
   className?: string;
 }) {
   return (
@@ -34,7 +39,19 @@ export function ProjectThumb({
         className,
       )}
     >
-      {mockFor(slug, title)}
+      {image ? (
+        <Image
+          src={image}
+          alt={`${title} — homepage`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          // `object-top` because the shots are 16:9 captures of the fold —
+          // anchoring to the top keeps the logo and headline in frame.
+          className="object-cover object-top"
+        />
+      ) : (
+        mockFor(slug, title)
+      )}
     </div>
   );
 }

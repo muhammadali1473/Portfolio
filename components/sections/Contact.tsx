@@ -82,11 +82,16 @@ export function Contact() {
     if (form.message.trim().length < 10) return setError("Tell me a bit more about your project.");
 
     setState("loading");
+    // Without a deadline a stalled request leaves the button reading "Sending…"
+    // forever, which looks like the site swallowed the message. Abort and say so.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20_000);
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
+        signal: controller.signal,
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
@@ -94,7 +99,13 @@ export function Contact() {
       setForm(emptyForm);
     } catch (err) {
       setState("error");
-      setError((err as Error).message);
+      setError(
+        (err as Error).name === "AbortError"
+          ? `That took too long to send. Please email ${socials.email} directly.`
+          : (err as Error).message,
+      );
+    } finally {
+      clearTimeout(timeout);
     }
   }
 

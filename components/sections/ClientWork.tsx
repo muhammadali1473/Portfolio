@@ -34,6 +34,16 @@ export function ClientWork() {
     (p) => p.status === "in-progress" || p.status === "proposal",
   ).length;
 
+  // Derived rather than written by hand — the old hardcoded string outlived the
+  // facts the moment live client sites were added.
+  const clients = PROJECTS.filter((p) => p.category === "Client");
+  const clientsLive = new Set(
+    clients.filter((p) => p.status === "shipped").map((p) => p.client),
+  ).size;
+  const clientsPitching = new Set(
+    clients.filter((p) => p.status === "proposal").map((p) => p.client),
+  ).size;
+
   return (
     <section id="client-work" className="relative py-28">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
@@ -42,7 +52,7 @@ export function ClientWork() {
           eyebrow="Client Delivery Dashboard"
           title="Work shipped and"
           highlight="proposals in flight."
-          subtitle="An honest, transparent view: personal products live in production, plus concepts currently at proposal stage."
+          subtitle="An honest, transparent view: client sites and personal products live in production, plus concepts currently at proposal stage."
         />
 
         {/* Summary cards */}
@@ -67,7 +77,7 @@ export function ClientWork() {
           <SummaryCard
             icon={<Building2 size={16} />}
             label="Distinct clients"
-            value="2 personal + 3 pitching"
+            value={`${clientsLive} live + ${clientsPitching} pitching`}
           />
         </div>
 

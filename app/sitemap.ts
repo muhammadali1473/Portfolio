@@ -13,7 +13,6 @@ const routes: { path: string; priority: number; changeFrequency: "weekly" | "mon
   { path: "/about", priority: 0.8, changeFrequency: "monthly" },
   { path: "/pricing", priority: 0.8, changeFrequency: "monthly" },
   { path: "/clients", priority: 0.75, changeFrequency: "monthly" },
-  { path: "/ai-demo", priority: 0.7, changeFrequency: "monthly" },
   { path: "/github", priority: 0.7, changeFrequency: "weekly" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
 ];
