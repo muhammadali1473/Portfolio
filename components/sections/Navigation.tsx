@@ -167,7 +167,9 @@ export function Navigation() {
               <button
                 aria-label="Open menu"
                 onClick={() => setMobileOpen((v) => !v)}
-                className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white/5 text-foreground"
+                // 44px square — the iOS/WCAG minimum for a thumb. At the old
+                // h-9 (36px) this was the smallest target on the phone header.
+                className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-white/5 text-foreground"
               >
                 {mobileOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
@@ -185,7 +187,7 @@ export function Navigation() {
             className="fixed inset-0 z-40 lg:hidden"
           >
             <div
-              className="absolute inset-0 bg-background/80 backdrop-blur-xl"
+              className="absolute inset-0 bg-background/50 backdrop-blur-sm"
               onClick={() => setMobileOpen(false)}
             />
             <motion.div
@@ -193,7 +195,10 @@ export function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 280, damping: 30 }}
-              className="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col gap-6 border-l border-white/10 bg-surface/95 p-6 pt-24"
+              // Glass rather than a solid slab: the page reads through the
+              // panel, with the blur keeping the labels legible over whatever
+              // section happens to sit behind it.
+              className="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col gap-6 border-l border-white/20 bg-surface/40 p-6 pt-24 backdrop-blur-2xl"
             >
               <nav className="flex flex-col gap-1">
                 {HEADER_LINKS.map((link, i) => {
@@ -207,7 +212,21 @@ export function Navigation() {
                     >
                       <Link
                         href={link.href}
-                        onClick={() => setMobileOpen(false)}
+                        onClick={(e) => {
+                          setMobileOpen(false);
+                          // Already on the one-pager: scroll straight there.
+                          // Routing to "/#x" from "/" makes Next refetch the
+                          // route and only move once the payload lands, so the
+                          // tap reads as dead for a second or more.
+                          if (pathname === "/") {
+                            const el = document.getElementById(link.id);
+                            if (el) {
+                              e.preventDefault();
+                              el.scrollIntoView({ behavior: "smooth", block: "start" });
+                              history.replaceState(null, "", link.href);
+                            }
+                          }
+                        }}
                         aria-current={active ? "page" : undefined}
                         className={cn(
                           "block rounded-xl px-4 py-3 text-lg font-medium transition-colors hover:bg-white/5 hover:text-foreground",

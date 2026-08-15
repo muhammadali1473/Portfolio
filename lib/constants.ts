@@ -365,6 +365,7 @@ export const PROJECTS: Project[] = [
     demoUrl:
       "https://apps.apple.com/ae/app/swipi-swipe-photo-cleaner/id6758861898",
     thumb: "swipi",
+    image: "/project-swipi.jpg",
   },
   {
     id: "spendwise",
@@ -385,6 +386,7 @@ export const PROJECTS: Project[] = [
     demoUrl:
       "https://apps.apple.com/ae/app/budget-planner-app-spendwise/id6758571585",
     thumb: "spendwise",
+    image: "/project-spendwise.jpg",
   },
   /*
    * Live client sites. Unlike the three concepts below these are shipped and

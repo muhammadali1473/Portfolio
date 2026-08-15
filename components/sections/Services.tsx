@@ -94,7 +94,9 @@ export function Services() {
 
                   <Link
                     href="/#contact"
-                    className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                    // py-2 with a matching -mb-2 grows the thumb target from
+                    // 20px to 36px without moving anything visually.
+                    className="mt-4 -mb-2 inline-flex items-center gap-1 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
                   >
                     Learn More
                     <ArrowUpRight

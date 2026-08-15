@@ -60,7 +60,10 @@ const MCPS: McpCard[] = [
 export function McpExpertise() {
   return (
     <section id="mcp" className="relative py-28">
-      <div className="pointer-events-none absolute inset-0 -z-10">
+      {/* overflow-hidden matters: the orb below is a fixed 620px wide, so on a
+          390px phone it hangs 115px past the viewport and gives the whole page
+          a sideways scroll. Clipping it here keeps the decoration decorative. */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute left-1/2 top-20 h-[320px] w-[620px] -translate-x-1/2 rounded-full bg-gradient-primary opacity-[0.07] blur-3xl" />
       </div>
       <div className="container">

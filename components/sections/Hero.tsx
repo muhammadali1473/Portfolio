@@ -78,7 +78,10 @@ export function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="flex flex-col items-stretch gap-3 pt-1 sm:flex-row sm:items-center"
+            // w-full because the column parent is items-start: without it this
+            // row shrinks to its widest button (~199px) and the phone CTAs sit
+            // at half the screen width. Back to auto once they go side by side.
+            className="flex w-full flex-col items-stretch gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center"
           >
             <MagneticButton href="/#projects" size="lg" icon={<ArrowRight size={16} />}>
               View My Work
