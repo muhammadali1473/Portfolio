@@ -26,6 +26,12 @@ export const site = {
   x: "https://x.com/get_Muham",
   xHandle: "@get_Muham",
   upwork: "https://www.upwork.com/freelancers/~01bd36b0801e739e81",
+  /** Google Drive share link — opens the CV in Drive's viewer, from where the
+   *  visitor can read it or download it themselves. Kept as the `/view` URL
+   *  rather than a forced `uc?export=download`, so a click never fires a
+   *  surprise download. */
+  resume:
+    "https://drive.google.com/file/d/1fzSioyHzVndgDM5neUazSzoU6wDord7j/view?usp=sharing",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://muhammadali.dev",
 };
 
@@ -39,6 +45,7 @@ export const socials = {
   upwork: process.env.NEXT_PUBLIC_UPWORK_URL || site.upwork,
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || site.phone,
   calendly: process.env.NEXT_PUBLIC_CALENDLY_URL || "",
+  resume: process.env.NEXT_PUBLIC_RESUME_URL || site.resume,
 };
 
 export function whatsappLink(message = "Hi Muhammad, I'd like to discuss a project.") {

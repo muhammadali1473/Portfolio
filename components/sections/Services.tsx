@@ -26,52 +26,48 @@ export function Services() {
               <GlowCard
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                className="h-full p-6 sm:p-8"
+                className="h-full"
               >
                 {/*
-                 * Artwork bled to the card edges behind the content. Negative
-                 * insets cancel the card padding, and GlowCard's overflow-hidden
-                 * clips it back to the rounded corners.
+                 * Artwork as a full-bleed band across the top of the card, with
+                 * the copy stacked underneath rather than over it. Sitting the
+                 * text on the image meant the scrim had to be heavy enough to
+                 * read against, which left the artwork a barely-visible ghost.
                  *
-                 * It is a band rather than a full cover so a wide source keeps
-                 * its composition instead of being cropped to its centre. The
-                 * paper-coloured scrim thickens downward, so the image reads
-                 * around the icon and is solid before the body copy starts.
+                 * The six sources are a mixed bag — light line illustrations
+                 * next to saturated stock photography — so the band applies a
+                 * shared treatment: desaturate, a warm paper wash, and a fade
+                 * into the card surface so the band has no hard seam.
                  */}
                 {service.image && (
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute -left-6 -right-6 -top-6 h-[54%] sm:-left-8 sm:-right-8 sm:-top-8"
+                    className="pointer-events-none relative h-32 w-full overflow-hidden sm:h-36"
                   >
                     <Image
                       src={service.image}
                       alt=""
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover object-center"
+                      className="object-cover object-center saturate-[.55] sepia-[.32] brightness-[1.06] transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                     />
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background:
-                          "linear-gradient(to bottom, rgba(250,247,242,0.04) 0%, rgba(250,247,242,0.12) 42%, rgba(250,247,242,0.44) 60%, rgba(250,247,242,0.88) 76%, rgba(250,247,242,0.99) 92%, #FAF7F2 100%)",
-                      }}
-                    />
+                    {/* Warm wash — the sepia above pulls the cool stock photos
+                        toward the paper palette, this softens what is left. */}
+                    <div className="absolute inset-0 bg-[hsl(var(--surface))] opacity-[0.18]" />
+                    <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[hsl(var(--surface))]" />
                   </div>
                 )}
 
-                {/* `relative` so the content stacks above the absolute artwork —
-                    without it, the positioned image would paint over this. */}
-                <div className="relative">
+                {/* `relative` keeps the copy on its own layer above the band's
+                    fade, so the gradient never paints over the icon tile. */}
+                <div className="relative p-6 pt-5 sm:p-8 sm:pt-6">
                   <motion.div
                     whileHover={{ rotate: 12, scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300, damping: 18 }}
-                    className="grid h-12 w-12 place-items-center rounded-xl border border-white/10 backdrop-blur-sm"
+                    className="grid h-12 w-12 place-items-center rounded-xl"
                     style={{
-                      // Paper base under the tint, so the tile stays crisp where
-                      // it sits directly on the artwork rather than going muddy.
-                      backgroundColor: "rgba(250,247,242,0.82)",
-                      backgroundImage: `linear-gradient(#${service.tint}26, #${service.tint}26)`,
+                      backgroundColor: `#${service.tint}1F`,
+                      border: `1px solid #${service.tint}2E`,
                       color: `#${service.tint}`,
                     }}
                   >

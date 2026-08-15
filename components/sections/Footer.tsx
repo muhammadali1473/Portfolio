@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Send } from "lucide-react";
+import { FileText, Mail, MapPin, Send } from "lucide-react";
 import {
   WhatsAppIcon,
   LinkedInIcon,
@@ -101,6 +101,19 @@ export function Footer() {
                   <span>Send a message</span>
                 </Link>
               </li>
+              {socials.resume && (
+                <li>
+                  <a
+                    href={socials.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2.5 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <FileText size={15} className="mt-0.5 shrink-0" aria-hidden />
+                    <span>View my CV</span>
+                  </a>
+                </li>
+              )}
               <li className="flex items-start gap-2.5 text-muted-foreground">
                 <MapPin size={15} className="mt-0.5 shrink-0" aria-hidden />
                 <span>Pakistan — working with clients worldwide</span>

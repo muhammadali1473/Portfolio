@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Balancer from "react-wrap-balancer";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, FileText } from "lucide-react";
 import { HERO_STATS } from "@/lib/constants";
+import { socials } from "@/lib/site";
 import { MagneticButton } from "@/components/shared/MagneticButton";
 import { GradientText } from "@/components/shared/GradientText";
 import { HeroPortrait } from "@/components/shared/HeroPortrait";
@@ -85,6 +86,22 @@ export function Hero() {
             <MagneticButton href="/#contact" variant="outline" size="lg" icon={<Calendar size={16} />}>
               Book a Free Call
             </MagneticButton>
+            {/* Bordered like the call CTA so it reads as a real action — the
+                paper fill and gold hairline keep it a step below the ink fill
+                without dropping it to invisible grey text. */}
+            {socials.resume && (
+              <MagneticButton
+                href={socials.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outline"
+                size="lg"
+                icon={<FileText size={16} />}
+                className="border-primary/40 bg-surface/70 hover:border-primary/70"
+              >
+                View CV
+              </MagneticButton>
+            )}
           </motion.div>
 
           <motion.dl

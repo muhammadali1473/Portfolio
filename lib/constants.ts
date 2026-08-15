@@ -278,6 +278,7 @@ export const SERVICES: Service[] = [
       "Automate social posting, email outreach, and data processing — saving 20+ hours of manual work every week.",
     tags: ["Automation", "Workflows", "Ops"],
     tint: "9A6B25",
+    image: "/service-automation.jpg",
   },
   {
     icon: Code2,
@@ -286,6 +287,7 @@ export const SERVICES: Service[] = [
       "Connect your tools — Stripe, Twilio, OpenAI, custom APIs. I make your systems talk to each other.",
     tags: ["APIs", "Stripe", "Webhooks"],
     tint: "4A7355",
+    image: "/service-api.jpg",
   },
 ];
 

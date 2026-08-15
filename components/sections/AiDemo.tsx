@@ -5,16 +5,12 @@ import { Loader2 } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 
-// Heavy demo widgets — dynamically import so they don't block the first paint
-// of the marketing page. They fall below the fold on desktop and mobile.
-const AskAiChat = dynamic(
-  () => import("@/components/ai/AskAiChat").then((m) => m.AskAiChat),
-  {
-    ssr: false,
-    loading: () => <DemoSkeleton label="Loading AI chat…" />,
-  },
-);
-
+// Heavy demo widget — dynamically imported so it doesn't block the first paint
+// of the marketing page. It falls below the fold on desktop and mobile.
+//
+// The Ask-AI chat used to sit beside this one, but the same component is
+// already mounted globally as the floating widget in app/layout.tsx, so the
+// section was showing the visitor a second copy of a chat they already had.
 const ProjectEstimator = dynamic(
   () => import("@/components/ai/ProjectEstimator").then((m) => m.ProjectEstimator),
   {
@@ -35,13 +31,10 @@ export function AiDemo() {
           eyebrow="AI Live Demo"
           title="I build with AI."
           highlight="Try it yourself."
-          subtitle="Two interactive demos — no signup required. Both powered by Groq's fast inference."
+          subtitle="Scope and price a project in a few clicks — no signup required, powered by Groq's fast inference."
         />
-        <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
-            <AskAiChat />
-          </Reveal>
-          <Reveal delay={0.1} className="lg:col-span-7">
+        <div className="mt-14">
+          <Reveal className="mx-auto w-full max-w-4xl">
             <ProjectEstimator />
           </Reveal>
         </div>
