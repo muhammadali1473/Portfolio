@@ -110,7 +110,7 @@ export function Pricing() {
                   </ul>
 
                   <Link
-                    href="/contact"
+                    href="/#contact"
                     className={cn(
                       "mt-6 inline-flex h-11 items-center justify-center rounded-xl text-sm font-semibold transition-all",
                       pkg.popular
@@ -136,7 +136,7 @@ export function Pricing() {
               </p>
             </div>
             <Link
-              href="/contact"
+              href="/#contact"
               className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10"
             >
               Discuss retainer →
@@ -148,7 +148,7 @@ export function Pricing() {
           <p className="mt-8 text-center text-sm text-muted-foreground">
             Not sure what fits?{" "}
             <Link
-              href="/contact"
+              href="/#contact"
               className="font-semibold gradient-text underline-offset-4 hover:underline"
             >
               Book a free 30-min consultation →

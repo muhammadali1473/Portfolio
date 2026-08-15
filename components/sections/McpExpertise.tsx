@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Plug, Sparkles } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
@@ -96,12 +97,12 @@ export function McpExpertise() {
                 </p>
               </div>
             </div>
-            <a
-              href="/contact"
+            <Link
+              href="/#contact"
               className="inline-flex items-center rounded-full bg-gradient-primary px-5 py-2 text-sm font-semibold text-white shadow-glow hover:brightness-110"
             >
               Start a conversation →
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

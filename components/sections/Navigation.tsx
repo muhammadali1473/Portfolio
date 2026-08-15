@@ -10,7 +10,74 @@ import { MagneticButton } from "@/components/shared/MagneticButton";
 import { MaktekLogo } from "@/components/shared/MaktekLogo";
 import { cn } from "@/lib/utils";
 
+// Module scope so the reference is stable and the observer effect runs once.
+const SECTION_IDS = HEADER_LINKS.map((l) => l.id);
+
+/**
+ * Scroll-spy. Highlights whichever section is crossing the middle band of the
+ * viewport.
+ *
+ * Deliberately not driven by pathname: the site is a one-pager, so on `/` there
+ * is only ever one route. It still behaves correctly on the standalone routes
+ * because those render the same sections with the same ids.
+ */
+function useActiveSection(ids: string[]) {
+  const [activeId, setActiveId] = useState(ids[0] ?? "");
+
+  useEffect(() => {
+    let frame = 0;
+
+    const compute = () => {
+      frame = 0;
+      // A notional reading line a third of the way down the viewport. The last
+      // section to have crossed it is the one being read.
+      const line = window.innerHeight * 0.35;
+      let current = "";
+
+      // `ids` is in document order, so the last match wins.
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top - 1 <= line) current = id;
+      }
+
+      // At the very bottom the final section may never cross the line, so the
+      // last one present on the page claims it.
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (atBottom) {
+        for (let i = ids.length - 1; i >= 0; i--) {
+          if (document.getElementById(ids[i])) {
+            current = ids[i];
+            break;
+          }
+        }
+      }
+
+      setActiveId(current || ids[0] || "");
+    };
+
+    // Re-queried on every pass rather than captured once, so sections that
+    // mount after this effect (the layout renders before the page) are picked
+    // up rather than missed forever.
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(compute);
+    };
+
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [ids]);
+
+  return activeId;
+}
+
 export function Navigation() {
+  const activeId = useActiveSection(SECTION_IDS);
   const { scrollY } = useScroll();
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
@@ -65,7 +132,7 @@ export function Navigation() {
 
             <nav className="hidden items-center gap-0.5 lg:flex">
               {HEADER_LINKS.map((link) => {
-                const active = pathname === link.href;
+                const active = activeId === link.id;
                 return (
                   <Link
                     key={link.href}
@@ -91,7 +158,7 @@ export function Navigation() {
             </nav>
 
             <div className="hidden items-center gap-2 lg:flex">
-              <MagneticButton href="/contact" variant="primary" size="sm">
+              <MagneticButton href="/#contact" variant="primary" size="sm">
                 Book a Call
               </MagneticButton>
             </div>
@@ -130,7 +197,7 @@ export function Navigation() {
             >
               <nav className="flex flex-col gap-1">
                 {HEADER_LINKS.map((link, i) => {
-                  const active = pathname === link.href;
+                  const active = activeId === link.id;
                   return (
                     <motion.div
                       key={link.href}
@@ -156,7 +223,7 @@ export function Navigation() {
                 })}
               </nav>
               <MagneticButton
-                href="/contact"
+                href="/#contact"
                 onClick={() => setMobileOpen(false)}
                 variant="primary"
                 size="lg"

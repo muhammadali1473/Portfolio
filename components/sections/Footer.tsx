@@ -94,7 +94,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="/#contact"
                   className="flex items-start gap-2.5 text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <Send size={15} className="mt-0.5 shrink-0" aria-hidden />
@@ -138,7 +138,7 @@ export function Footer() {
                 Privacy Policy
               </Link>
               <span aria-hidden>·</span>
-              <Link href="/contact" className="transition-colors hover:text-foreground">
+              <Link href="/#contact" className="transition-colors hover:text-foreground">
                 Contact
               </Link>
             </div>

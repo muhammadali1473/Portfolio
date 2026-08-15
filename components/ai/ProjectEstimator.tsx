@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Loader2, Wand2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -195,13 +196,13 @@ export function ProjectEstimator() {
                 ))}
               </ul>
             </div>
-            <a
-              href="/contact"
+            <Link
+              href="/#contact"
               aria-label="Contact Muhammad about this estimate"
               className="mt-5 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 text-sm font-semibold text-white shadow-glow transition-all hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
             >
               Contact Muhammad →
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

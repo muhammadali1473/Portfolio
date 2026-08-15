@@ -14,8 +14,8 @@ export function SectionLinks() {
         <SectionHeading
           eyebrow="Explore"
           title="Everything you need to know,"
-          highlight="one page at a time."
-          subtitle="Pick a topic below — each one opens its own page."
+          highlight="all on one page."
+          subtitle="Jump straight to any section below."
         />
 
         <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -26,7 +26,7 @@ export function SectionLinks() {
             const dark = link.tint === "181717";
             return (
               <Reveal key={link.href} delay={0.05 * i} className="h-full">
-                <Link href={link.href} className="block h-full focus:outline-none">
+                <Link href={link.anchor} className="block h-full focus:outline-none">
                   <GlowCard className="h-full p-6 transition-transform duration-300 hover:-translate-y-1">
                     <div className="flex h-full flex-col gap-4">
                       <div className="flex items-start justify-between gap-4">

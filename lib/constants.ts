@@ -17,11 +17,17 @@ import type { ComponentType } from "react";
 import { GitHubIcon } from "@/components/shared/SocialIcons";
 
 /**
- * Every nav destination is a real route. `blurb` and `icon` are used by the
- * homepage card grid; the nav and footer only read `href` and `label`.
+ * The site is a one-pager: every section lives on `/`, and the nav, footer and
+ * card grid all scroll to it via `anchor`.
+ *
+ * `href` is kept because each section ALSO still exists as a standalone route
+ * with its own title and description — those stay reachable for deep links and
+ * search, they are just no longer what the navigation points at.
  */
 export type NavLink = {
   href: string;
+  /** In-page target on the home page, e.g. `/#about`. What the nav links to. */
+  anchor: string;
   label: string;
   blurb: string;
   /** Any icon component taking size/className — lucide glyphs or our own
@@ -36,6 +42,7 @@ export type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   {
     href: "/about",
+    anchor: "/#about",
     label: "About",
     blurb: "My journey, what I build, and the stack I reach for.",
     icon: User,
@@ -43,6 +50,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/services",
+    anchor: "/#services",
     label: "Services",
     blurb: "What I offer and how a project runs start to finish.",
     icon: Zap,
@@ -50,6 +58,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/projects",
+    anchor: "/#projects",
     label: "Projects",
     blurb: "Selected work — AI agents, web apps, and iOS builds.",
     icon: Rocket,
@@ -57,6 +66,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/mcp",
+    anchor: "/#mcp",
     label: "MCP",
     blurb: "Model Context Protocol servers, my specialty.",
     icon: Plug,
@@ -64,6 +74,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/clients",
+    anchor: "/#client-work",
     label: "Clients",
     blurb: "Client engagements and what they had to say.",
     icon: Handshake,
@@ -71,6 +82,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/github",
+    anchor: "/#github",
     label: "GitHub",
     blurb: "Open-source repositories, pulled live from GitHub.",
     icon: GitHubIcon,
@@ -78,6 +90,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/ai-demo",
+    anchor: "/#ai-demo",
     label: "AI Demo",
     blurb: "Try the AI assistant and project estimator yourself.",
     icon: Bot,
@@ -85,6 +98,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/pricing",
+    anchor: "/#pricing",
     label: "Pricing",
     blurb: "Transparent packages and engagement models.",
     icon: DollarSign,
@@ -92,6 +106,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   {
     href: "/contact",
+    anchor: "/#contact",
     label: "Contact",
     blurb: "Tell me about your project — I reply within a day.",
     icon: Mail,
@@ -102,10 +117,17 @@ export const NAV_LINKS: NavLink[] = [
 /**
  * Header/footer menu. Home is prepended here rather than added to NAV_LINKS so
  * the homepage card grid doesn't render a card pointing at itself.
+ *
+ * `href` here carries the ANCHOR, not the route — the menu drives in-page
+ * scrolling. `id` is the bare element id, which the nav uses for scroll-spy.
  */
-export const HEADER_LINKS: { href: string; label: string }[] = [
-  { href: "/", label: "Home" },
-  ...NAV_LINKS.map(({ href, label }) => ({ href, label })),
+export const HEADER_LINKS: { href: string; label: string; id: string }[] = [
+  { href: "/#top", label: "Home", id: "top" },
+  ...NAV_LINKS.map(({ anchor, label }) => ({
+    href: anchor,
+    label,
+    id: anchor.replace("/#", ""),
+  })),
 ];
 
 export type HeroStat = { value: string; label: string };
@@ -207,6 +229,9 @@ export type Service = {
   /** Hex (no #) tint for this card's icon tile — same idea as NavLink.tint,
    *  so six services don't read as six identical blue squares. */
   tint: string;
+  /** Optional artwork bled across the top of the card, behind the content.
+   *  Wide crops work best — it is rendered as a band, not a full cover. */
+  image?: string;
 };
 
 export const SERVICES: Service[] = [
@@ -217,6 +242,7 @@ export const SERVICES: Service[] = [
       "Custom AI assistants trained on your business — handle customer support, lead qualification, and FAQ automation 24/7.",
     tags: ["Chatbots", "Agents", "Support"],
     tint: "6B5B95",
+    image: "/service-ai-agents.jpg",
   },
   {
     icon: Plug,
@@ -225,6 +251,7 @@ export const SERVICES: Service[] = [
       "Custom MCP (Model Context Protocol) servers that connect AI to LinkedIn, X/Twitter, CRMs, social media, and internal tools.",
     tags: ["MCP", "Protocol", "Integrations"],
     tint: "3F6B70",
+    image: "/service-mcp.png",
   },
   {
     icon: Globe,
@@ -233,6 +260,7 @@ export const SERVICES: Service[] = [
       "High-performance websites and web applications built with Next.js, React, and cutting-edge tech.",
     tags: ["Next.js", "React", "SaaS"],
     tint: "4A6285",
+    image: "/service-web.png",
   },
   {
     icon: Smartphone,
@@ -241,6 +269,7 @@ export const SERVICES: Service[] = [
       "iOS and cross-platform mobile apps. Two live on the App Store — Swipi and SpendWise. Fast, polished, approved.",
     tags: ["iOS", "React Native", "App Store"],
     tint: "9B4A4A",
+    image: "/service-mobile.png",
   },
   {
     icon: Zap,

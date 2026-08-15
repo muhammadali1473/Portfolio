@@ -36,6 +36,14 @@
     color-scheme: light;
   }
 
+  /*
+   * One-pager anchor offset. The header is fixed and ~72px tall, so without
+   * this every `/#section` jump would park the section heading underneath it.
+   */
+  section[id] {
+    scroll-margin-top: 96px;
+  }
+
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;

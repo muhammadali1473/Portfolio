@@ -79,10 +79,10 @@ export function Hero() {
             animate="show"
             className="flex flex-col items-stretch gap-3 pt-1 sm:flex-row sm:items-center"
           >
-            <MagneticButton href="/projects" size="lg" icon={<ArrowRight size={16} />}>
+            <MagneticButton href="/#projects" size="lg" icon={<ArrowRight size={16} />}>
               View My Work
             </MagneticButton>
-            <MagneticButton href="/contact" variant="outline" size="lg" icon={<Calendar size={16} />}>
+            <MagneticButton href="/#contact" variant="outline" size="lg" icon={<Calendar size={16} />}>
               Book a Free Call
             </MagneticButton>
           </motion.div>
