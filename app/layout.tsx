@@ -5,9 +5,7 @@ import { Footer } from "@/components/sections/Footer";
 import { ChatWidget } from "@/components/ai/ChatWidget";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ScrollProgress } from "@/components/shared/ScrollProgress";
-import { CustomCursor } from "@/components/shared/CustomCursor";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
-import { ThemeProvider, themeInitScript } from "@/components/providers/ThemeProvider";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -79,11 +77,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+// Single warm-light theme, so a single theme colour — the page background.
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0A0A0F" },
-  ],
+  themeColor: "#F0EAE1",
   width: "device-width",
   initialScale: 1,
 };
@@ -136,9 +132,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fontSans.variable} ${fontMono.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
       {gtmEnabled && <GoogleTagManager gtmId={GTM_ID} />}
       {gaEnabled && <GoogleAnalytics gaId={GA_ID} />}
       <body
@@ -148,20 +141,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Skip-to-content for keyboard & screen-reader users (FIX #11) */}
         <a
           href="#main-content"
-          className="fixed left-3 top-3 z-[100] -translate-y-24 rounded-full bg-gradient-primary px-4 py-2 text-sm font-semibold text-white shadow-glow transition-transform focus:translate-y-0 focus:outline-none"
+          className="fixed left-3 top-3 z-[100] -translate-y-24 rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-white shadow-glow transition-transform focus:translate-y-0 focus:outline-none"
         >
           Skip to content
         </a>
 
-        <ThemeProvider>
-          <ScrollProgress />
-          <CustomCursor />
-          <Navigation />
-          <main id="main-content">{children}</main>
-          <Footer />
-          <ScrollToTop />
-          <ChatWidget />
-        </ThemeProvider>
+        <ScrollProgress />
+        <Navigation />
+        <main id="main-content">{children}</main>
+        <Footer />
+        <ScrollToTop />
+        <ChatWidget />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

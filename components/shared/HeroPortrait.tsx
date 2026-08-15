@@ -5,8 +5,15 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Hero portrait card. The slow float lives on an outer wrapper as a CSS
- * animation so it can't fight framer-motion's transform on the hover layer.
+ * The portrait, mounted rather than decorated.
+ *
+ * The frame is filled with `band` (#B8A68F) — the exact backdrop colour sampled
+ * from the photograph — so the image edge meets the mount with no visible seam,
+ * and the whole block reads as one warm shape sitting on the lighter page.
+ *
+ * Gone from the previous version: the slow float, the gradient border, the
+ * purple glow, and the sheen that swept across on hover. A still photograph
+ * should stay still.
  */
 export function HeroPortrait({
   src = "/hero-portrait.png",
@@ -19,47 +26,34 @@ export function HeroPortrait({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.94, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
       className={cn("relative", className)}
     >
-      <div className="animate-float-slow">
-        <motion.div
-          whileHover={{ scale: 1.03, y: -8 }}
-          transition={{ type: "spring", stiffness: 240, damping: 20 }}
-          className="group relative rounded-[2rem] bg-gradient-primary p-[2px] shadow-glow transition-shadow duration-500 hover:shadow-glow-lg"
-        >
-          <div className="relative aspect-square overflow-hidden rounded-[calc(2rem-2px)] bg-surface">
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              priority
-              sizes="(max-width: 1024px) 448px, 520px"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-              style={{ objectPosition: "center 22%" }}
-            />
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-band shadow-glow">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority
+          sizes="(max-width: 1024px) 448px, 520px"
+          className="object-cover"
+          style={{ objectPosition: "center 18%" }}
+        />
 
-            {/* Grounds the photo against the page and keeps the bottom edge soft */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"
-            />
-
-            {/* Sheen that sweeps across on hover */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full"
-            />
-
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 rounded-[calc(2rem-2px)] ring-1 ring-inset ring-white/10"
-            />
-          </div>
-        </motion.div>
+        {/* Hairline mount edge, drawn inside so it survives the rounded corners */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-foreground/10"
+        />
       </div>
+
+      {/* A single gold rule under the portrait, echoing the heading underline */}
+      <div
+        aria-hidden
+        className="rule-gold mt-5 h-px w-2/3"
+      />
     </motion.div>
   );
 }

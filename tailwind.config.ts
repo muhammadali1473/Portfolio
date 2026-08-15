@@ -3,8 +3,18 @@ import type { Config } from "tailwindcss";
 // where `require` is not defined — a bare require() here crashes the CSS build.
 import tailwindcssAnimate from "tailwindcss-animate";
 
+/**
+ * Palette is sampled directly from the hero portrait rather than invented:
+ *   backdrop  #B7A58D → #C1AB9D   (page is a lightened tint of this)
+ *   shirt     #171717 → #171C20   (ink, and the primary button fill)
+ *   warm light on skin            (gold accent)
+ *
+ * Two golds on purpose. `accent`/`primary` (#875C2C) clears 4.5:1 on the page
+ * so it is safe for text; `gold` (#A8763C) is brighter and decorative only —
+ * rules, dots, underlines, the scroll bar. Never set body copy in `gold`.
+ */
 const config: Config = {
-  darkMode: "class",
+  // Single warm-light theme. The dark class hook is gone along with the toggle.
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -39,22 +49,29 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        // The band colour — the portrait's true backdrop. Used as a block fill
+        // behind the photo so the image edge meets it seamlessly.
+        band: "#B8A68F",
+        // Gold ink. 4.88:1 on the page background — safe for text and icons.
         primary: {
-          DEFAULT: "#8B5CF6",
-          foreground: "#FAFAFA",
+          DEFAULT: "#875C2C",
+          foreground: "#FDFBF7",
         },
+        // Clay, pulled from the skin tones. Secondary highlights.
         secondary: {
-          DEFAULT: "#3B82F6",
-          foreground: "#FAFAFA",
+          DEFAULT: "#8A5F4A",
+          foreground: "#FDFBF7",
         },
+        // Bronze-olive, from the backdrop's shadow side.
         accent: {
-          DEFAULT: "#06B6D4",
-          foreground: "#FAFAFA",
+          DEFAULT: "#6F6350",
+          foreground: "#FDFBF7",
         },
-        gold: "#FCD34D",
+        // Decorative gold — rules, dots, underlines. Not for text.
+        gold: "#A8763C",
         destructive: {
-          DEFAULT: "#ef4444",
-          foreground: "#FAFAFA",
+          DEFAULT: "#A33A32",
+          foreground: "#FDFBF7",
         },
         card: {
           DEFAULT: "hsl(var(--surface))",
@@ -66,14 +83,15 @@ const config: Config = {
         },
       },
       backgroundImage: {
-        "gradient-primary":
-          "linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #06B6D4 100%)",
+        // Redefined rather than removed: ~22 files reference these. Keeping the
+        // names and flattening the values retunes every one of them at once.
+        "gradient-primary": "linear-gradient(135deg, #A8763C 0%, #875C2C 100%)",
         "gradient-primary-soft":
-          "linear-gradient(135deg, rgba(139,92,246,0.18) 0%, rgba(59,130,246,0.18) 50%, rgba(6,182,212,0.18) 100%)",
+          "linear-gradient(135deg, rgba(168,118,60,0.12) 0%, rgba(135,92,44,0.12) 100%)",
         "gradient-radial":
           "radial-gradient(ellipse at top, var(--tw-gradient-stops))",
         "grid-faint":
-          "linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)",
+          "linear-gradient(to right, rgba(26,26,24,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(26,26,24,0.045) 1px, transparent 1px)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -89,17 +107,11 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        "float-slow": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-14px)" },
-        },
-        "gradient-shift": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
+        // Retained for the "available" status dot, retuned from a neon pulse
+        // to a soft warm halo.
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(139,92,246,0.55)" },
-          "50%": { boxShadow: "0 0 0 12px rgba(139,92,246,0)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(135,92,44,0.28)" },
+          "50%": { boxShadow: "0 0 0 10px rgba(135,92,44,0)" },
         },
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
@@ -117,16 +129,16 @@ const config: Config = {
       animation: {
         "fade-up": "fade-up 0.6s ease-out forwards",
         "fade-in": "fade-in 0.6s ease-out forwards",
-        "float-slow": "float-slow 7s ease-in-out infinite",
-        "gradient-shift": "gradient-shift 6s ease infinite",
-        "pulse-glow": "pulse-glow 2.4s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 2.8s ease-in-out infinite",
         shimmer: "shimmer 2.4s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       boxShadow: {
-        glow: "0 0 40px -8px rgba(139,92,246,0.55)",
-        "glow-lg": "0 0 80px -12px rgba(59,130,246,0.55)",
+        // Was a purple neon bloom. Now a real shadow: warm, tight, physical.
+        glow: "0 1px 2px rgba(26,26,24,0.05), 0 8px 24px -14px rgba(26,26,24,0.18)",
+        "glow-lg":
+          "0 2px 4px rgba(26,26,24,0.06), 0 18px 44px -20px rgba(26,26,24,0.26)",
       },
     },
   },

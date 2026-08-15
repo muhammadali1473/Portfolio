@@ -1,10 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
-import { type ButtonHTMLAttributes, type ReactNode, useRef } from "react";
+import { type ButtonHTMLAttributes, type ReactNode } from "react";
 
+/**
+ * Name kept for the ~15 files that import it, but the magnet is gone: the
+ * cursor-tracking spring read as a gimmick against a calm editorial page, and
+ * it forced a layout measurement on every pointer move.
+ *
+ * `primary` is an ink fill — the same near-black as the shirt in the portrait.
+ * Gold is deliberately NOT the button colour: a gold fill only reaches ~3.6:1
+ * against white text, whereas ink clears 15:1. Gold stays an accent.
+ */
 type Variant = "primary" | "outline" | "ghost";
 
 type BaseProps = {
@@ -27,14 +35,14 @@ type AsLink = BaseProps & {
 type MagneticButtonProps = AsButton | AsLink;
 
 const baseStyles =
-  "relative inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-transform will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50";
+  "group relative inline-flex items-center justify-center gap-2 rounded-lg font-medium tracking-tight transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50";
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    "text-white shadow-glow bg-gradient-primary hover:shadow-glow-lg hover:brightness-110",
+    "bg-foreground text-white shadow-glow hover:-translate-y-0.5 hover:shadow-glow-lg",
   outline:
-    "text-foreground border border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/25",
-  ghost: "text-foreground hover:bg-white/5",
+    "border border-border bg-transparent text-foreground hover:border-primary/50 hover:bg-primary/[0.06] hover:text-primary",
+  ghost: "text-muted-foreground hover:bg-primary/[0.06] hover:text-foreground",
 };
 
 const sizeStyles = {
@@ -51,43 +59,18 @@ export function MagneticButton(props: MagneticButtonProps) {
     size = "md",
     className,
   } = props;
-  const ref = useRef<HTMLElement | null>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 260, damping: 22 });
-  const sy = useSpring(y, { stiffness: 260, damping: 22 });
-  const tx = useTransform(sx, (v) => `${v}px`);
-  const ty = useTransform(sy, (v) => `${v}px`);
 
-  // Measured once on enter rather than on every move — reading layout inside a
-  // mousemove handler forces a synchronous reflow per event.
-  const rectRef = useRef<DOMRect | null>(null);
-
-  const handleMouseEnter = () => {
-    if (ref.current) rectRef.current = ref.current.getBoundingClientRect();
-  };
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = rectRef.current;
-    if (!rect) return;
-    const relX = e.clientX - rect.left - rect.width / 2;
-    const relY = e.clientY - rect.top - rect.height / 2;
-    x.set(relX * 0.25);
-    y.set(relY * 0.25);
-  };
-  const handleMouseLeave = () => {
-    rectRef.current = null;
-    x.set(0);
-    y.set(0);
-  };
-
+  // The icon drifts a few pixels on hover — the one bit of motion kept, because
+  // it signals direction rather than decorating.
   const inner = (
-    <motion.span
-      style={{ x: tx, y: ty }}
-      className="relative z-10 inline-flex items-center gap-2"
-    >
+    <>
       {children}
-      {icon}
-    </motion.span>
+      {icon && (
+        <span className="inline-flex transition-transform duration-300 ease-out group-hover:translate-x-0.5">
+          {icon}
+        </span>
+      )}
+    </>
   );
 
   const classes = cn(baseStyles, variantStyles[variant], sizeStyles[size], className);
@@ -95,14 +78,10 @@ export function MagneticButton(props: MagneticButtonProps) {
   if ("href" in props && props.href) {
     return (
       <Link
-        ref={ref as React.RefObject<HTMLAnchorElement>}
         href={props.href}
         target={props.target}
         rel={props.rel}
         onClick={props.onClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
         className={classes}
       >
         {inner}
@@ -119,14 +98,7 @@ export function MagneticButton(props: MagneticButtonProps) {
   void _s;
   void _c;
   return (
-    <button
-      ref={ref as React.RefObject<HTMLButtonElement>}
-      onMouseEnter={handleMouseEnter}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={classes}
-      {...rest}
-    >
+    <button className={classes} {...rest}>
       {inner}
     </button>
   );

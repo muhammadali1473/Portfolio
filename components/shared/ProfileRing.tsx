@@ -1,6 +1,11 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+/**
+ * Circular portrait. The pulsing purple halo and gradient ring are replaced by
+ * a band-coloured mount and a single gold hairline — the same mounting logic as
+ * HeroPortrait, in a circle.
+ */
 export function ProfileRing({
   src = "/profile.png",
   alt = "Muhammad Ali",
@@ -12,12 +17,8 @@ export function ProfileRing({
 }) {
   return (
     <div className={cn("relative", className)}>
-      <div
-        aria-hidden
-        className="absolute -inset-1 rounded-full bg-gradient-primary opacity-70 blur-2xl animate-pulse-glow"
-      />
-      <div className="relative rounded-full bg-gradient-primary p-[3px]">
-        <div className="relative h-64 w-64 overflow-hidden rounded-full bg-surface sm:h-72 sm:w-72">
+      <div className="relative rounded-full bg-band p-[3px] shadow-glow">
+        <div className="relative h-64 w-64 overflow-hidden rounded-full bg-band sm:h-72 sm:w-72">
           <Image
             src={src}
             alt={alt}
@@ -29,9 +30,8 @@ export function ProfileRing({
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-t from-black/40 via-transparent to-transparent"
+            className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-foreground/10"
           />
-          <div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
         </div>
       </div>
     </div>

@@ -8,7 +8,6 @@ import { Menu, X } from "lucide-react";
 import { HEADER_LINKS } from "@/lib/constants";
 import { MagneticButton } from "@/components/shared/MagneticButton";
 import { MaktekLogo } from "@/components/shared/MaktekLogo";
-import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
@@ -92,14 +91,12 @@ export function Navigation() {
             </nav>
 
             <div className="hidden items-center gap-2 lg:flex">
-              <ThemeToggle />
               <MagneticButton href="/contact" variant="primary" size="sm">
                 Book a Call
               </MagneticButton>
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
-              <ThemeToggle />
               <button
                 aria-label="Open menu"
                 onClick={() => setMobileOpen((v) => !v)}

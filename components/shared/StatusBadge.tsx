@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
 import type { ProjectStatus } from "@/lib/constants";
 
+/**
+ * Status keeps its semantic hues — green ships, amber is in flight, blue is a
+ * proposal — but retuned for a light page. The old 300-weight text was tuned
+ * for a near-black background and fell under 2:1 here; these 700 weights clear
+ * 4.5:1 on the warm surface, and the dots lost their neon halos.
+ */
 export function StatusBadge({
   status,
   className,
@@ -11,18 +17,18 @@ export function StatusBadge({
   const map = {
     shipped: {
       label: "Shipped",
-      border: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-      dot: "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]",
+      border: "border-emerald-700/25 bg-emerald-700/[0.07] text-emerald-800",
+      dot: "bg-emerald-700",
     },
     "in-progress": {
       label: "In Progress",
-      border: "border-amber-400/30 bg-amber-400/10 text-amber-300",
-      dot: "bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.8)]",
+      border: "border-amber-700/25 bg-amber-700/[0.07] text-amber-800",
+      dot: "bg-amber-700",
     },
     proposal: {
       label: "Proposal Stage",
-      border: "border-sky-400/30 bg-sky-400/10 text-sky-300",
-      dot: "bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.7)]",
+      border: "border-sky-800/25 bg-sky-800/[0.07] text-sky-900",
+      dot: "bg-sky-800",
     },
   } as const;
   const cfg = map[status];
