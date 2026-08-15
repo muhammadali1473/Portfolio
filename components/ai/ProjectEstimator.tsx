@@ -94,7 +94,7 @@ export function ProjectEstimator() {
               onChange={(e) =>
                 setForm((f) => ({ ...f, complexity: Number(e.target.value) }))
               }
-              className="w-full accent-[#8b5cf6]"
+              className="w-full accent-[#875C2C]"
             />
           </Field>
           <Field label="Timeline">

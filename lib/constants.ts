@@ -39,35 +39,35 @@ export const NAV_LINKS: NavLink[] = [
     label: "About",
     blurb: "My journey, what I build, and the stack I reach for.",
     icon: User,
-    tint: "8B5CF6",
+    tint: "6B5B95",
   },
   {
     href: "/services",
     label: "Services",
     blurb: "What I offer and how a project runs start to finish.",
     icon: Zap,
-    tint: "F59E0B",
+    tint: "9A6B25",
   },
   {
     href: "/projects",
     label: "Projects",
     blurb: "Selected work — AI agents, web apps, and iOS builds.",
     icon: Rocket,
-    tint: "F43F5E",
+    tint: "9B4A4A",
   },
   {
     href: "/mcp",
     label: "MCP",
     blurb: "Model Context Protocol servers, my specialty.",
     icon: Plug,
-    tint: "06B6D4",
+    tint: "3F6B70",
   },
   {
     href: "/clients",
     label: "Clients",
     blurb: "Client engagements and what they had to say.",
     icon: Handshake,
-    tint: "10B981",
+    tint: "4A7355",
   },
   {
     href: "/github",
@@ -81,21 +81,21 @@ export const NAV_LINKS: NavLink[] = [
     label: "AI Demo",
     blurb: "Try the AI assistant and project estimator yourself.",
     icon: Bot,
-    tint: "3B82F6",
+    tint: "4A6285",
   },
   {
     href: "/pricing",
     label: "Pricing",
     blurb: "Transparent packages and engagement models.",
     icon: DollarSign,
-    tint: "22C55E",
+    tint: "5A7346",
   },
   {
     href: "/contact",
     label: "Contact",
     blurb: "Tell me about your project — I reply within a day.",
     icon: Mail,
-    tint: "0EA5E9",
+    tint: "456A82",
   },
 ];
 
@@ -216,7 +216,7 @@ export const SERVICES: Service[] = [
     description:
       "Custom AI assistants trained on your business — handle customer support, lead qualification, and FAQ automation 24/7.",
     tags: ["Chatbots", "Agents", "Support"],
-    tint: "8B5CF6",
+    tint: "6B5B95",
   },
   {
     icon: Plug,
@@ -224,7 +224,7 @@ export const SERVICES: Service[] = [
     description:
       "Custom MCP (Model Context Protocol) servers that connect AI to LinkedIn, X/Twitter, CRMs, social media, and internal tools.",
     tags: ["MCP", "Protocol", "Integrations"],
-    tint: "06B6D4",
+    tint: "3F6B70",
   },
   {
     icon: Globe,
@@ -232,7 +232,7 @@ export const SERVICES: Service[] = [
     description:
       "High-performance websites and web applications built with Next.js, React, and cutting-edge tech.",
     tags: ["Next.js", "React", "SaaS"],
-    tint: "3B82F6",
+    tint: "4A6285",
   },
   {
     icon: Smartphone,
@@ -240,7 +240,7 @@ export const SERVICES: Service[] = [
     description:
       "iOS and cross-platform mobile apps. Two live on the App Store — Swipi and SpendWise. Fast, polished, approved.",
     tags: ["iOS", "React Native", "App Store"],
-    tint: "F43F5E",
+    tint: "9B4A4A",
   },
   {
     icon: Zap,
@@ -248,7 +248,7 @@ export const SERVICES: Service[] = [
     description:
       "Automate social posting, email outreach, and data processing — saving 20+ hours of manual work every week.",
     tags: ["Automation", "Workflows", "Ops"],
-    tint: "F59E0B",
+    tint: "9A6B25",
   },
   {
     icon: Code2,
@@ -256,7 +256,7 @@ export const SERVICES: Service[] = [
     description:
       "Connect your tools — Stripe, Twilio, OpenAI, custom APIs. I make your systems talk to each other.",
     tags: ["APIs", "Stripe", "Webhooks"],
-    tint: "10B981",
+    tint: "4A7355",
   },
 ];
 

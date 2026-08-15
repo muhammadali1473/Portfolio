@@ -132,8 +132,8 @@ function McpServerCard({ mcp, index }: { mcp: McpCard; index: number }) {
           className={cn(
             "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em]",
             isProd
-              ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300"
-              : "border-amber-400/30 bg-amber-400/10 text-amber-300",
+              ? "border-emerald-700/25 bg-emerald-700/[0.07] text-emerald-800"
+              : "border-amber-700/25 bg-amber-700/[0.07] text-amber-800",
           )}
         >
           <span

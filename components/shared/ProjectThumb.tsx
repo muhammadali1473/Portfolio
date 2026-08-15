@@ -284,7 +284,7 @@ function SpendWiseMock({ title }: MockProps) {
         className="absolute inset-0 opacity-30"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 85% 15%, rgba(16,185,129,0.45), transparent 45%), radial-gradient(circle at 15% 90%, rgba(6,182,212,0.45), transparent 50%)",
+            "radial-gradient(circle at 85% 15%, rgba(168,118,60,0.5), transparent 45%), radial-gradient(circle at 15% 90%, rgba(184,166,143,0.5), transparent 50%)",
         }}
       />
       <div className="absolute top-3 right-3 grid h-6 w-6 place-items-center rounded-full border border-white/30 bg-white/10 backdrop-blur">
@@ -463,7 +463,7 @@ function GenericMock({ title }: MockProps) {
     <div
       className="absolute inset-0"
       style={{
-        background: "linear-gradient(135deg, #1e1b4b 0%, #3b82f6 55%, #06b6d4 100%)",
+        background: "linear-gradient(135deg, #2A2622 0%, #875C2C 55%, #B8A68F 100%)",
       }}
     >
       <div className="absolute inset-0 grid-pattern opacity-30" />

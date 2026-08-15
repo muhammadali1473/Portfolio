@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
  * HeroPortrait, in a circle.
  */
 export function ProfileRing({
-  src = "/profile.png",
+  // The same portrait as the hero. The previous /profile.png was shot against
+  // a blue sky, which fought the warm palette everywhere it appeared.
+  src = "/hero-portrait.png",
   alt = "Muhammad Ali",
   className,
 }: {

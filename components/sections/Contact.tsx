@@ -203,7 +203,7 @@ export function Contact() {
               <motion.div
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative mt-4 flex items-start gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-sm text-emerald-300"
+                className="relative mt-4 flex items-start gap-2 rounded-xl border border-emerald-700/25 bg-emerald-700/[0.07] px-3 py-2 text-sm text-emerald-800"
               >
                 <CheckCircle2 size={16} className="mt-0.5" />
                 <span>
@@ -305,7 +305,7 @@ export function Contact() {
 }
 
 const inputClass =
-  "w-full min-h-[44px] rounded-xl border border-white/10 bg-background/60 px-3.5 py-3 text-sm text-foreground outline-none transition-all focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.18)]";
+  "w-full min-h-[44px] rounded-xl border border-white/10 bg-background/60 px-3.5 py-3 text-sm text-foreground outline-none transition-all focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(135,92,44,0.16)]";
 
 function Field({
   label,

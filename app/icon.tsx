@@ -14,8 +14,8 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0A0A0F",
-          color: "#ffffff",
+          background: "#1A1A18",
+          color: "#FDFBF7",
           fontFamily: "system-ui, sans-serif",
           fontWeight: 800,
           fontSize: "17px",
@@ -24,7 +24,7 @@ export default function Icon() {
         }}
       >
         <span>M</span>
-        <span style={{ color: "#3B82F6" }}>K</span>
+        <span style={{ color: "#C9A063" }}>K</span>
       </div>
     ),
     size,

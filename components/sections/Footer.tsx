@@ -147,7 +147,7 @@ export function Footer() {
             </p>
             <p>
               Built with Next.js, Tailwind, and{" "}
-              <span className="text-rose-400" aria-hidden>
+              <span className="text-rose-700" aria-hidden>
                 ❤
               </span>
               <span className="sr-only">love</span> from Pakistan.

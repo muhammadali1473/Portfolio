@@ -92,7 +92,7 @@ export function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="mt-4 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-border pt-7 text-sm text-muted-foreground"
+            className="mt-4 grid w-full grid-cols-2 gap-x-6 gap-y-6 border-t border-border pt-7 text-sm text-muted-foreground sm:grid-cols-4"
           >
             {HERO_STATS.map((stat) => (
               <div key={stat.label} className="flex flex-col gap-0.5">

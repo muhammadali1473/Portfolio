@@ -5,6 +5,11 @@ export const alt = "Muhammad Ali — Full-Stack Developer & AI Specialist";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+/**
+ * Warm paper card, matching the site. Deliberately light — it stands out in a
+ * feed of dark preview cards, and it carries the same palette sampled from the
+ * portrait: page #F0EAE1, ink #1A1A18, band #B8A68F, gold #875C2C.
+ */
 export default function OpengraphImage() {
   return new ImageResponse(
     (
@@ -12,7 +17,7 @@ export default function OpengraphImage() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#0A0A0F",
+          background: "#F0EAE1",
           display: "flex",
           flexDirection: "column",
           padding: "72px",
@@ -20,39 +25,26 @@ export default function OpengraphImage() {
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        {/* Gradient glow background */}
+        {/* The band, as a full-height block on the right edge */}
         <div
           style={{
             position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(1100px 600px at 15% 0%, rgba(139,92,246,0.45), transparent 55%), radial-gradient(900px 500px at 95% 10%, rgba(6,182,212,0.35), transparent 60%), radial-gradient(900px 500px at 50% 110%, rgba(59,130,246,0.3), transparent 60%)",
+            top: 0,
+            bottom: 0,
+            right: 0,
+            width: "232px",
+            background: "#B8A68F",
           }}
         />
 
-        {/* Bottom-right accent glow */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "-120px",
-            right: "-80px",
-            width: "480px",
-            height: "480px",
-            borderRadius: "9999px",
-            background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
-            opacity: 0.45,
-            filter: "blur(90px)",
-          }}
-        />
-
-        {/* Top row: MA mark + handle */}
+        {/* Top row: MK mark + handle */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "16px",
-            fontSize: "22px",
-            color: "#A1A1AA",
+            gap: "18px",
+            fontSize: "21px",
+            color: "#6B6155",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
           }}
@@ -62,17 +54,17 @@ export default function OpengraphImage() {
               width: "56px",
               height: "56px",
               borderRadius: "14px",
-              background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
+              background: "#1A1A18",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#ffffff",
+              color: "#FDFBF7",
               fontWeight: 800,
               fontSize: "24px",
-              letterSpacing: 0,
+              letterSpacing: "-0.04em",
             }}
           >
-            MA
+            MK
           </div>
           @get_Muham
         </div>
@@ -83,25 +75,30 @@ export default function OpengraphImage() {
             marginTop: "auto",
             display: "flex",
             flexDirection: "column",
-            gap: "24px",
+            gap: "22px",
+            maxWidth: "860px",
           }}
         >
           <div
             style={{
-              fontSize: "108px",
+              fontSize: "104px",
               lineHeight: 1,
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              color: "#FAFAFA",
+              fontWeight: 700,
+              letterSpacing: "-0.035em",
+              color: "#1A1A18",
             }}
           >
             Muhammad Ali
           </div>
+
+          {/* Gold rule, echoing the heading underline on the site */}
+          <div style={{ display: "flex", width: "160px", height: "3px", background: "#A8763C" }} />
+
           <div
             style={{
-              fontSize: "42px",
+              fontSize: "40px",
               fontWeight: 600,
-              color: "#E5E7EB",
+              color: "#4A423A",
               letterSpacing: "-0.01em",
             }}
           >
@@ -109,44 +106,18 @@ export default function OpengraphImage() {
           </div>
           <div
             style={{
-              fontSize: "26px",
-              color: "#A1A1AA",
+              fontSize: "25px",
+              color: "#875C2C",
+              fontWeight: 600,
               display: "flex",
-              gap: "10px",
+              gap: "12px",
             }}
           >
-            <span
-              style={{
-                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
-                backgroundClip: "text",
-                color: "transparent",
-                fontWeight: 600,
-              }}
-            >
-              AI Agents
-            </span>
-            <span>·</span>
-            <span
-              style={{
-                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
-                backgroundClip: "text",
-                color: "transparent",
-                fontWeight: 600,
-              }}
-            >
-              MCP Servers
-            </span>
-            <span>·</span>
-            <span
-              style={{
-                background: "linear-gradient(135deg, #8B5CF6, #3B82F6, #06B6D4)",
-                backgroundClip: "text",
-                color: "transparent",
-                fontWeight: 600,
-              }}
-            >
-              Modern Web Apps
-            </span>
+            <span>AI Agents</span>
+            <span style={{ color: "#A89C8A" }}>·</span>
+            <span>MCP Servers</span>
+            <span style={{ color: "#A89C8A" }}>·</span>
+            <span>Modern Web Apps</span>
           </div>
         </div>
       </div>

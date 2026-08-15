@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
  * an M. Redrawn as vector so it stays sharp at any size and picks up the
  * current theme instead of carrying the source file's black background.
  *
- * The pillars use `currentColor` (white on dark, near-black on light) and the
- * chevron uses the brand blue, matching the original artwork.
+ * The pillars use `currentColor` (near-black on the warm page) and the chevron
+ * carries the gold accent.
  */
 export function MaktekMark({
   size = 28,
@@ -33,9 +33,9 @@ export function MaktekMark({
         d="M5 40V8h8l11 18L35 8h8v32h-8V22L24 39 13 22v18H5Z"
         fill="currentColor"
       />
-      {/* The centre V, painted over the same geometry in brand blue. Its edges
-          are identical to the M's inner valley, so it registers exactly. */}
-      <path d="M13 8l11 18L35 8v14L24 39 13 22V8Z" fill="#3B82F6" />
+      {/* The centre V, painted over the same geometry in the gold accent. Its
+          edges are identical to the M's inner valley, so it registers exactly. */}
+      <path d="M13 8l11 18L35 8v14L24 39 13 22V8Z" fill="#A8763C" />
     </svg>
   );
 }

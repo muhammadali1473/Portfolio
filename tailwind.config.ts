@@ -85,7 +85,10 @@ const config: Config = {
       backgroundImage: {
         // Redefined rather than removed: ~22 files reference these. Keeping the
         // names and flattening the values retunes every one of them at once.
-        "gradient-primary": "linear-gradient(135deg, #A8763C 0%, #875C2C 100%)",
+        // Both stops are dark enough that white text on a gold fill clears
+        // 4.5:1 (#96682F → 4.56:1, #7E5527 → 6.53:1). The brighter decorative
+        // gold (#A8763C) lives in `.rule-gold`, where nothing sits on top of it.
+        "gradient-primary": "linear-gradient(135deg, #96682F 0%, #7E5527 100%)",
         "gradient-primary-soft":
           "linear-gradient(135deg, rgba(168,118,60,0.12) 0%, rgba(135,92,44,0.12) 100%)",
         "gradient-radial":

@@ -283,17 +283,17 @@ function StatusPill({ status }: { status: ProjectStatus }) {
   const map = {
     shipped: {
       label: "Shipped",
-      cls: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
+      cls: "border-emerald-700/25 bg-emerald-700/[0.07] text-emerald-800",
       dot: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]",
     },
     "in-progress": {
       label: "In Progress",
-      cls: "border-amber-400/30 bg-amber-400/10 text-amber-300",
+      cls: "border-amber-700/25 bg-amber-700/[0.07] text-amber-800",
       dot: "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]",
     },
     proposal: {
       label: "Proposal Stage",
-      cls: "border-sky-400/30 bg-sky-400/10 text-sky-300",
+      cls: "border-sky-800/25 bg-sky-800/[0.07] text-sky-900",
       dot: "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.7)]",
     },
   } as const;
@@ -313,10 +313,10 @@ function StatusPill({ status }: { status: ProjectStatus }) {
 
 function CategoryDot({ category }: { category: Project["category"] }) {
   const map = {
-    Client: { label: "Client", color: "from-violet-400 to-fuchsia-400", icon: <User2 size={12} /> },
-    Product: { label: "Product", color: "from-sky-400 to-cyan-400", icon: <Sparkles size={12} /> },
-    "Open Source": { label: "OSS", color: "from-emerald-400 to-lime-400", icon: <Globe size={12} /> },
-    "iOS App": { label: "iOS", color: "from-amber-300 to-rose-400", icon: <Sparkles size={12} /> },
+    Client: { label: "Client", color: "from-violet-700 to-fuchsia-800", icon: <User2 size={12} /> },
+    Product: { label: "Product", color: "from-sky-700 to-cyan-800", icon: <Sparkles size={12} /> },
+    "Open Source": { label: "OSS", color: "from-emerald-700 to-lime-800", icon: <Globe size={12} /> },
+    "iOS App": { label: "iOS", color: "from-amber-700 to-rose-800", icon: <Sparkles size={12} /> },
   } as const;
   const cfg = map[category];
   return (
