@@ -26,7 +26,7 @@ const fadeUp = {
 export function Hero() {
   return (
     <section id="top" className="relative isolate pt-28 sm:pt-32 lg:pt-40">
-      <div className="container grid grid-cols-1 items-center gap-14 pb-24 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:pb-32">
+      <div className="container grid grid-cols-1 items-center gap-14 pb-24 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:pb-32">
         <div className="flex flex-col items-start gap-7">
           <motion.div
             custom={0}
@@ -128,7 +128,7 @@ export function Hero() {
           </motion.dl>
         </div>
 
-        <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
+        <div className="relative mx-auto w-full max-w-sm lg:max-w-none lg:self-start lg:-mt-8 lg:scale-110 lg:origin-top">
           <HeroPortrait />
         </div>
       </div>

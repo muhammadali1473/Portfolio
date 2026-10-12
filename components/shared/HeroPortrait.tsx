@@ -38,13 +38,13 @@ export function HeroPortrait({
         className="pointer-events-none absolute left-1/2 top-[46%] -z-10 h-[78%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-band opacity-30 blur-3xl"
       />
 
-      <div className="relative aspect-[775/990] w-full">
+      <div className="relative aspect-[775/770] w-full">
         <Image
           src={src}
           alt={alt}
           fill
           priority
-          sizes="(max-width: 1024px) 420px, 520px"
+          sizes="(max-width: 1024px) 420px, 680px"
           className="object-contain object-bottom"
           style={{
             maskImage:
