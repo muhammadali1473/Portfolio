@@ -2,19 +2,48 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plug, Sparkles } from "lucide-react";
+import { ArrowRight, Plug, Sparkles } from "lucide-react";
+import { siClaude, siFacebook, siInstagram, siReddit, siTiktok } from "simple-icons";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
+import { LinkedInIcon, XIcon } from "@/components/shared/SocialIcons";
 import { cn } from "@/lib/utils";
+
+type Platform = "linkedin" | "x" | "instagram" | "tiktok" | "facebook" | "reddit";
+
+/** Real brand marks, so each card reads as "the Instagram one" at a glance
+ *  instead of six identical plug icons. LinkedIn and X come from SocialIcons
+ *  because simple-icons no longer ships LinkedIn. */
+const PLATFORMS: Record<Platform, { label: string; hex: string; path?: string }> = {
+  linkedin: { label: "LinkedIn", hex: "0A66C2" },
+  x: { label: "X", hex: "000000" },
+  instagram: { label: "Instagram", hex: "E4405F", path: siInstagram.path },
+  tiktok: { label: "TikTok", hex: "000000", path: siTiktok.path },
+  facebook: { label: "Facebook", hex: "0866FF", path: siFacebook.path },
+  reddit: { label: "Reddit", hex: "FF4500", path: siReddit.path },
+};
+
+function PlatformLogo({ platform, className }: { platform: Platform; className?: string }) {
+  if (platform === "linkedin") return <LinkedInIcon className={className} />;
+  if (platform === "x") return <XIcon className={className} />;
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d={PLATFORMS[platform].path} />
+    </svg>
+  );
+}
 
 type McpCard = {
   id: string;
+  platform: Platform;
   name: string;
   tagline: string;
-  status: "production" | "beta";
-  tools: number;
-  calls: string;
-  language: string;
+  /** "available" = a server I build per client, not one already running —
+   *  so it carries no usage numbers rather than invented ones. */
+  status: "production" | "beta" | "available";
+  tools?: number;
+  calls?: string;
+  language?: string;
   stack: string[];
   highlights: string[];
   repoUrl?: string;
@@ -23,6 +52,7 @@ type McpCard = {
 const MCPS: McpCard[] = [
   {
     id: "linkedin-mcp",
+    platform: "linkedin",
     name: "LinkedIn MCP Server",
     tagline:
       "AI-driven lead research, outreach drafting, and connection analysis.",
@@ -40,6 +70,7 @@ const MCPS: McpCard[] = [
   },
   {
     id: "x-mcp-builder",
+    platform: "x",
     name: "X MCP Builder",
     tagline:
       "Post threads, search tweets, run trend analytics — all from an MCP endpoint.",
@@ -54,6 +85,64 @@ const MCPS: McpCard[] = [
       "Backoff + retry on 429s",
     ],
     repoUrl: "https://github.com/muhammadali1473",
+  },
+  {
+    id: "instagram-mcp",
+    platform: "instagram",
+    name: "Instagram Automation MCP",
+    tagline:
+      "Claude runs Instagram outreach: finds buyers in reel comments, replies, and opens DMs.",
+    status: "production",
+    tools: 18,
+    calls: "Runs daily",
+    stack: ["Claude", "MCP SDK", "Unipile", "Instagram"],
+    highlights: [
+      "Inbox, reel commenters and new followers scanned for warm leads",
+      "Claude writes every comment and DM; agents and spam filtered out",
+      "Daily caps on DMs, likes and follows to keep the account safe",
+    ],
+  },
+  {
+    id: "tiktok-mcp",
+    platform: "tiktok",
+    name: "TikTok Automation MCP",
+    tagline:
+      "Let Claude monitor comments, reply to viewers and track what content performs.",
+    status: "production",
+    stack: ["Claude", "MCP SDK", "TikTok API"],
+    highlights: [
+      "Comment monitoring and AI-written replies",
+      "Lead capture from video comments",
+      "Post and engagement analytics",
+    ],
+  },
+  {
+    id: "facebook-mcp",
+    platform: "facebook",
+    name: "Facebook Automation MCP",
+    tagline:
+      "Pages, Messenger and comments handled by Claude, with leads saved for follow-up.",
+    status: "production",
+    stack: ["Claude", "MCP SDK", "Meta Graph API"],
+    highlights: [
+      "Messenger auto-replies in your brand voice",
+      "Page post scheduling and comment moderation",
+      "Leads from comments and messages saved to your CRM",
+    ],
+  },
+  {
+    id: "reddit-mcp",
+    platform: "reddit",
+    name: "Reddit Automation MCP",
+    tagline:
+      "Claude finds threads where people ask for what you sell and drafts helpful replies.",
+    status: "production",
+    stack: ["Claude", "MCP SDK", "Reddit API"],
+    highlights: [
+      "Subreddit and keyword monitoring for buying intent",
+      "Helpful, non-spammy reply drafts for review",
+      "Mentions and sentiment tracking",
+    ],
   },
 ];
 
@@ -95,7 +184,7 @@ export function McpExpertise() {
                   Need a custom MCP for your stack?
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  I&apos;ve built them for LinkedIn, X, and custom CRMs. Yours could be
+                  I&apos;ve built them for LinkedIn, X, Instagram, TikTok, Facebook and Reddit. Your CRM could be
                   next.
                 </p>
               </div>
@@ -122,10 +211,19 @@ function McpServerCard({ mcp, index }: { mcp: McpCard; index: number }) {
       className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-surface/50 p-5 backdrop-blur hover:border-white/20 hover:shadow-glow"
     >
       <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-primary/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      {/* Oversized platform mark bled off the bottom-right corner — the card's
+          background image, faint enough that the copy on top stays readable. */}
+      <PlatformLogo
+        platform={mcp.platform}
+        className="pointer-events-none absolute -bottom-10 -right-8 h-48 w-48 opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.1]"
+      />
       <div className="relative flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow">
-            <Plug size={17} />
+          <div
+            className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-xl text-white shadow-glow"
+            style={{ backgroundColor: `#${PLATFORMS[mcp.platform].hex}` }}
+          >
+            <PlatformLogo platform={mcp.platform} className="h-5 w-5" />
           </div>
           <div>
             <p className="text-sm font-semibold">{mcp.name}</p>
@@ -148,16 +246,41 @@ function McpServerCard({ mcp, index }: { mcp: McpCard; index: number }) {
                 : "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]",
             )}
           />
-          {isProd ? "Production" : "Beta"}
+          {isProd ? "Production" : mcp.status === "beta" ? "Beta" : "Built to order"}
         </span>
       </div>
 
-      {/* Mini stats */}
-      <div className="relative mt-5 grid grid-cols-3 gap-2">
-        <MiniStat label="Tools" value={mcp.tools.toString()} />
-        <MiniStat label="Usage" value={mcp.calls} />
-        <MiniStat label="Language" value={mcp.language} />
+      {/* How it works, in one line: Claude talks to the MCP server, the server
+          drives the platform. Explains "MCP" without a paragraph of jargon. */}
+      <div className="relative mt-5 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+        <FlowNode>
+          <svg viewBox="0 0 24 24" fill={`#${siClaude.hex}`} aria-hidden className="h-3.5 w-3.5">
+            <path d={siClaude.path} />
+          </svg>
+          Claude
+        </FlowNode>
+        <ArrowRight size={12} className="flex-shrink-0 text-primary" />
+        <FlowNode>
+          <Plug size={12} className="text-primary" />
+          MCP
+        </FlowNode>
+        <ArrowRight size={12} className="flex-shrink-0 text-primary" />
+        <FlowNode>
+          <span style={{ color: `#${PLATFORMS[mcp.platform].hex}` }}>
+            <PlatformLogo platform={mcp.platform} className="h-3.5 w-3.5" />
+          </span>
+          {PLATFORMS[mcp.platform].label}
+        </FlowNode>
       </div>
+
+      {/* Mini stats — only the ones this server actually has numbers for */}
+      {(mcp.tools || mcp.calls || mcp.language) && (
+        <div className="relative mt-5 grid grid-cols-3 gap-2">
+          {mcp.tools && <MiniStat label="Tools" value={mcp.tools.toString()} />}
+          {mcp.calls && <MiniStat label="Usage" value={mcp.calls} />}
+          {mcp.language && <MiniStat label="Language" value={mcp.language} />}
+        </div>
+      )}
 
       {/* Highlights */}
       <ul className="relative mt-5 space-y-1.5">
@@ -190,6 +313,14 @@ function McpServerCard({ mcp, index }: { mcp: McpCard; index: number }) {
         className="relative mt-5 h-px origin-left bg-gradient-primary opacity-60"
       />
     </motion.div>
+  );
+}
+
+function FlowNode({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
+      {children}
+    </span>
   );
 }
 

@@ -267,8 +267,8 @@ export const SERVICES: Service[] = [
     icon: Zap,
     title: "Business Automation",
     description:
-      "Automate social posting, email outreach, and data processing — saving 20+ hours of manual work every week.",
-    tags: ["Automation", "Workflows", "Ops"],
+      "Claude-powered MCP automation for Instagram, TikTok, Facebook and Reddit — comments, DMs and lead capture — plus email outreach and data processing.",
+    tags: ["Instagram", "TikTok", "Facebook", "Reddit"],
     tint: "9A6B25",
     image: "/service-automation.jpg",
   },

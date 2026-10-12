@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  *    photograph was actually shot against
  */
 export function HeroPortrait({
-  src = "/hero-cutout.png",
+  src = "/hero-photo.png",
   alt = "Muhammad Ali",
   className,
 }: {
@@ -38,7 +38,7 @@ export function HeroPortrait({
         className="pointer-events-none absolute left-1/2 top-[46%] -z-10 h-[78%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-band opacity-30 blur-3xl"
       />
 
-      <div className="relative aspect-[775/770] w-full">
+      <div className="relative aspect-[1141/1144] w-full">
         <Image
           src={src}
           alt={alt}
