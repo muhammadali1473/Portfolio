@@ -13,6 +13,7 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { ProjectThumb } from "@/components/shared/ProjectThumb";
 import { Reveal } from "@/components/shared/Reveal";
+import { ShareLinkButton } from "@/components/shared/ShareLinkButton";
 import { FEATURED_PROJECTS, type Project } from "@/lib/constants";
 
 function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
@@ -110,6 +111,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
               <Github size={12} /> GitHub
             </a>
           )}
+          <ShareLinkButton path={`/projects/${project.id}`} title={project.title} />
         </div>
       </div>
     </motion.div>
@@ -195,6 +197,11 @@ function ProjectModal({
                   <Github size={14} /> GitHub
                 </a>
               )}
+              <ShareLinkButton
+                path={`/projects/${project.id}`}
+                title={project.title}
+                className="px-4 py-2 text-sm"
+              />
             </div>
           </motion.div>
         </motion.div>

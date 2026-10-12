@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
+import { PROJECTS } from "@/lib/constants";
 
 /**
  * One entry per real route. Hash fragments are not separate URLs to a crawler,
@@ -19,10 +20,17 @@ const routes: { path: string; priority: number; changeFrequency: "weekly" | "mon
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  return routes.map(({ path, priority, changeFrequency }) => ({
+  const pages = routes.map(({ path, priority, changeFrequency }) => ({
     url: `${site.url}${path}`,
     lastModified: now,
     changeFrequency,
     priority,
   }));
+  const projects = PROJECTS.map((p) => ({
+    url: `${site.url}/projects/${p.id}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+  return [...pages, ...projects];
 }
