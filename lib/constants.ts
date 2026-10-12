@@ -366,6 +366,43 @@ export const PROJECTS: Project[] = [
     thumb: "ai-chatbot",
   },
   {
+    id: "rag-chatbot",
+    title: "RAG Document Chatbot",
+    summary:
+      "Upload a PDF, Word file, or text document and chat with it — answers come from your document, not the model's guesses.",
+    description:
+      "Mobile RAG app: upload PDF, DOCX, or TXT files to a document library, get auto-generated summaries, topics, and study questions, then ask questions answered from the document's own content.",
+    story:
+      "General chatbots make things up when they don't know your data. This app grounds every answer in the uploaded document: the backend extracts the text, injects the relevant content into the prompt, and Llama 3 on Groq answers from that alone. The same retrieval pattern is what lets a business chatbot answer from its own policies, price lists, and FAQs instead of guessing.",
+    tech: ["React Native", "Expo", "Node.js", "Groq API", "RAG"],
+    status: "shipped",
+    outcome: "Open source on GitHub",
+    client: "Personal / OSS",
+    role: "Solo developer",
+    delivered: "Shipped",
+    category: "Open Source",
+    repoUrl: "https://github.com/muhammadali1473/AI-Document-Analysis-Chat-App",
+    thumb: "rag-chatbot",
+  },
+  {
+    id: "lead-crm",
+    title: "AI Lead CRM for Real Estate",
+    summary:
+      "Lead pipeline fed by Instagram and LinkedIn — Claude finds buyers, scores them 1–10, and matches each to the right off-plan project.",
+    description:
+      "CRM behind the Instagram and LinkedIn MCP servers. Every buyer the AI finds is saved with their source, a 1–10 score and a pipeline status, matched to projects by budget, area and bedrooms, and rolled up into a daily report.",
+    story:
+      "A real-estate agency's outreach was producing conversations nobody tracked. The fix was a CRM the AI writes to directly: when Claude spots a buyer in reel comments, new followers or LinkedIn posts, it saves them as a lead, scores how likely they are to buy, and filters out agents and brokers. Each lead is matched against live project inventory so the first DM offers something that actually fits, and the status moves from new to contacted to replied as the conversation goes.",
+    tech: ["Claude", "MCP Protocol", "Unipile", "Lead scoring"],
+    status: "shipped",
+    outcome: "Runs daily for a Dubai real-estate agency",
+    client: "Real estate agency (Dubai, UAE)",
+    role: "Solo developer",
+    delivered: "Shipped",
+    category: "Client",
+    thumb: "lead-crm",
+  },
+  {
     id: "swipi",
     title: "Swipi — Swipe Photo Cleaner",
     summary:
@@ -733,6 +770,8 @@ export const FEATURED_PROJECTS = [
   "linkedin-mcp",
   "x-mcp-builder",
   "ai-chatbot",
+  "rag-chatbot",
+  "lead-crm",
   "swipi",
   "spendwise",
 ]

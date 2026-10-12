@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {
   Bot,
+  FileText,
   SendHorizontal,
   CircleDollarSign,
   Linkedin,
@@ -66,6 +67,10 @@ function mockFor(slug: string, title: string) {
       return <XMcpMock title={title} />;
     case "ai-chatbot":
       return <ChatbotMock title={title} />;
+    case "rag-chatbot":
+      return <RagChatbotMock title={title} />;
+    case "lead-crm":
+      return <LeadCrmMock title={title} />;
     case "swipi":
       return <SwipiMock title={title} />;
     case "spendwise":
@@ -576,6 +581,145 @@ function ChatbotMock({ title }: MockProps) {
               <SendHorizontal size={9} className="ml-auto text-amber-300" />
             </div>
           </div>
+        </div>
+      </div>
+      <span className="sr-only">{title}</span>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────
+ * RAG Chatbot — a document feeding a chat answer with source
+ * citations, on a deep teal gradient
+ * ────────────────────────────────────────────────────────────── */
+function RagChatbotMock({ title }: MockProps) {
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        background: "linear-gradient(135deg, #042f2e 0%, #0f766e 55%, #0e7490 100%)",
+      }}
+    >
+      <div aria-hidden className="absolute -right-8 -top-10 h-36 w-36 rounded-full bg-emerald-300/30 blur-3xl" />
+      <div aria-hidden className="absolute -bottom-12 -left-6 h-40 w-40 rounded-full bg-cyan-300/25 blur-3xl" />
+      <div aria-hidden className="absolute inset-0 grid-pattern opacity-20" />
+
+      <div className="relative z-10 flex h-full items-center gap-2 p-4 sm:gap-3 sm:p-5">
+        {/* source document */}
+        <div className="flex h-[82%] w-[34%] flex-col gap-1 rounded-lg border border-white/20 bg-white/90 p-2 shadow-2xl">
+          <div className="flex items-center gap-1">
+            <FileText size={9} className="text-teal-700" />
+            <span className="truncate text-[7px] font-semibold text-slate-800">Policy.pdf</span>
+          </div>
+          {[90, 75, 85, 60].map((w, i) => (
+            <span key={i} className="h-[3px] rounded bg-slate-300" style={{ width: `${w}%` }} />
+          ))}
+          {/* the passage the answer was retrieved from */}
+          <span className="mt-0.5 rounded bg-emerald-200 px-1 py-0.5 text-[6px] leading-tight text-emerald-900">
+            Refunds within 14 days of purchase.
+          </span>
+          {[80, 70, 88].map((w, i) => (
+            <span key={i} className="h-[3px] rounded bg-slate-300" style={{ width: `${w}%` }} />
+          ))}
+        </div>
+
+        {/* retrieval arrow */}
+        <div className="flex flex-col items-center gap-0.5">
+          <span className="rounded border border-white/25 bg-white/10 px-1 font-mono text-[6px] font-bold tracking-wider text-white">
+            RAG
+          </span>
+          <span className="text-[10px] leading-none text-emerald-200">→</span>
+        </div>
+
+        {/* chat answer grounded in the document */}
+        <div className="flex h-[82%] flex-1 flex-col justify-end gap-1 rounded-lg border border-white/15 bg-white/10 p-2 backdrop-blur-md">
+          <span className="max-w-[80%] self-end rounded-lg rounded-br-sm bg-cyan-300/90 px-1.5 py-1 text-[7px] text-cyan-950">
+            Can I get a refund?
+          </span>
+          <span className="max-w-[90%] self-start rounded-lg rounded-bl-sm bg-white/90 px-1.5 py-1 text-[7px] text-slate-800">
+            Yes — within 14 days of purchase.
+          </span>
+          <span className="inline-flex items-center gap-1 self-start rounded-full border border-emerald-200/40 bg-emerald-300/20 px-1.5 py-0.5 text-[6px] text-emerald-100">
+            <FileText size={6} />
+            Source: Policy.pdf · p.2
+          </span>
+        </div>
+      </div>
+      <span className="sr-only">{title}</span>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────
+ * Lead CRM — three-column pipeline board with scored lead cards
+ * tagged by source, on a warm slate→bronze gradient
+ * ────────────────────────────────────────────────────────────── */
+function LeadCrmMock({ title }: MockProps) {
+  const columns = [
+    {
+      name: "New",
+      leads: [
+        { who: "Ahmed K.", src: "IG", score: 8, note: "2BR · Dubai Hills" },
+        { who: "Sara M.", src: "in", score: 6, note: "Studio · JVC" },
+      ],
+    },
+    {
+      name: "Contacted",
+      leads: [{ who: "Omar R.", src: "IG", score: 9, note: "Villa · AED 3M" }],
+    },
+    {
+      name: "Replied",
+      leads: [{ who: "Lina T.", src: "in", score: 7, note: "1BR · Marina" }],
+    },
+  ];
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        background: "linear-gradient(135deg, #1c1917 0%, #44403c 50%, #875c2c 100%)",
+      }}
+    >
+      <div aria-hidden className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-400/30 blur-3xl" />
+      <div aria-hidden className="absolute inset-0 grid-pattern opacity-15" />
+
+      <div className="relative z-10 flex h-full flex-col p-3 sm:p-4">
+        <div className="flex items-center justify-between">
+          <span className="text-[8px] font-semibold text-white">Lead Pipeline</span>
+          <span className="rounded border border-white/20 bg-white/10 px-1 font-mono text-[6px] uppercase tracking-wider text-amber-200">
+            Today · 4 new
+          </span>
+        </div>
+
+        <div className="mt-1.5 grid flex-1 grid-cols-3 gap-1.5">
+          {columns.map((col) => (
+            <div key={col.name} className="flex flex-col gap-1 rounded-md border border-white/10 bg-white/5 p-1">
+              <span className="font-mono text-[6px] uppercase tracking-wider text-white/60">{col.name}</span>
+              {col.leads.map((l) => (
+                <div key={l.who} className="rounded bg-white/90 p-1 shadow">
+                  <div className="flex items-center gap-1">
+                    <span
+                      className={cn(
+                        "grid h-2.5 w-2.5 place-items-center rounded-sm text-[5px] font-bold text-white",
+                        l.src === "IG" ? "bg-[#E4405F]" : "bg-[#0A66C2]",
+                      )}
+                    >
+                      {l.src}
+                    </span>
+                    <span className="truncate text-[7px] font-semibold text-slate-800">{l.who}</span>
+                    <span
+                      className={cn(
+                        "ml-auto rounded px-0.5 text-[6px] font-bold",
+                        l.score >= 8 ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800",
+                      )}
+                    >
+                      {l.score}/10
+                    </span>
+                  </div>
+                  <span className="mt-0.5 block truncate text-[6px] text-slate-500">{l.note}</span>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
       <span className="sr-only">{title}</span>
