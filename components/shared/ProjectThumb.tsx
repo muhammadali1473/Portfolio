@@ -1,5 +1,7 @@
 import Image from "next/image";
 import {
+  Bot,
+  SendHorizontal,
   CircleDollarSign,
   Linkedin,
   MessageSquare,
@@ -62,6 +64,8 @@ function mockFor(slug: string, title: string) {
       return <LinkedInMcpMock title={title} />;
     case "x-mcp-builder":
       return <XMcpMock title={title} />;
+    case "ai-chatbot":
+      return <ChatbotMock title={title} />;
     case "swipi":
       return <SwipiMock title={title} />;
     case "spendwise":
@@ -501,6 +505,80 @@ export function AppIconBadge({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="relative h-8 w-8 overflow-hidden rounded-lg border border-white/20 bg-black/30">
       <Image src={src} alt={alt} fill sizes="32px" className="object-cover" />
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────
+ * AI Chatbot — chat window floating on a violet→amber gradient,
+ * with a history sidebar, message bubbles and a typing indicator
+ * ────────────────────────────────────────────────────────────── */
+function ChatbotMock({ title }: MockProps) {
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 45%, #9a3412 100%)",
+      }}
+    >
+      {/* soft glows behind the window */}
+      <div aria-hidden className="absolute -left-8 -top-10 h-36 w-36 rounded-full bg-violet-400/40 blur-3xl" />
+      <div aria-hidden className="absolute -bottom-12 -right-6 h-40 w-40 rounded-full bg-amber-400/35 blur-3xl" />
+      <div aria-hidden className="absolute inset-0 grid-pattern opacity-20" />
+
+      <div className="relative z-10 flex h-full items-center justify-center p-4 sm:p-5">
+        <div className="flex h-full w-full max-w-[92%] overflow-hidden rounded-lg border border-white/15 bg-white/10 shadow-2xl backdrop-blur-md">
+          {/* history sidebar */}
+          <div className="hidden w-[28%] flex-col gap-1 border-r border-white/10 bg-black/20 p-1.5 sm:flex">
+            <span className="mb-0.5 font-mono text-[6px] uppercase tracking-wider text-white/50">History</span>
+            {["Pricing question", "Book a demo", "Refund policy"].map((t, i) => (
+              <span
+                key={t}
+                className={cn(
+                  "truncate rounded px-1 py-0.5 text-[7px]",
+                  i === 0 ? "bg-white/20 text-white" : "text-white/60",
+                )}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {/* conversation */}
+          <div className="flex flex-1 flex-col p-2">
+            <div className="flex items-center gap-1.5 border-b border-white/10 pb-1.5">
+              <span className="grid h-4 w-4 place-items-center rounded-full bg-gradient-to-br from-violet-400 to-amber-400">
+                <Bot size={9} className="text-white" />
+              </span>
+              <span className="text-[8px] font-semibold text-white">AI Assistant</span>
+              <span className="ml-auto rounded border border-white/20 bg-white/10 px-1 font-mono text-[6px] uppercase tracking-wider text-white/80">
+                Llama 3 · Groq
+              </span>
+            </div>
+
+            <div className="flex flex-1 flex-col justify-end gap-1 py-1.5">
+              <span className="max-w-[70%] self-end rounded-lg rounded-br-sm bg-amber-400/90 px-1.5 py-1 text-[7px] text-amber-950">
+                How much is the Pro plan?
+              </span>
+              <span className="max-w-[78%] self-start rounded-lg rounded-bl-sm bg-white/90 px-1.5 py-1 text-[7px] text-slate-800">
+                Pro is $1,200 and includes a custom AI assistant. Want me to book a call?
+              </span>
+              <span className="flex w-8 items-center justify-center gap-0.5 self-start rounded-lg bg-white/20 py-1">
+                {[0, 1, 2].map((d) => (
+                  <span key={d} className="h-1 w-1 rounded-full bg-white/80" />
+                ))}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1 rounded-md border border-white/15 bg-white/10 px-1.5 py-1">
+              <span className="h-[3px] w-16 rounded bg-white/30" />
+              <SendHorizontal size={9} className="ml-auto text-amber-300" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <span className="sr-only">{title}</span>
     </div>
   );
 }

@@ -347,6 +347,25 @@ export const PROJECTS: Project[] = [
     thumb: "x-mcp-builder",
   },
   {
+    id: "ai-chatbot",
+    title: "AI Chatbot — Groq + LangChain",
+    summary:
+      "Conversational AI chatbot with memory, saved chat history, and a choice of open LLMs served on Groq.",
+    description:
+      "Full chat app built on Groq's low-latency inference. Remembers the conversation, saves and reopens past chats, and lets the user switch between Llama 3, Mixtral, and Gemma mid-session.",
+    story:
+      "Built to learn what makes a chatbot feel good rather than just work: replies that stream back almost instantly, memory that keeps context across turns, and a sidebar of titled past sessions you can jump back into. LangChain handles conversation memory; Groq keeps latency low enough that the bot feels conversational. The same patterns now power the assistants I build for clients.",
+    tech: ["Python", "Streamlit", "Groq API", "LangChain"],
+    status: "shipped",
+    outcome: "Open source on GitHub",
+    client: "Personal / OSS",
+    role: "Solo developer",
+    delivered: "Shipped",
+    category: "Open Source",
+    repoUrl: "https://github.com/muhammadali1473/Chatbot_AI",
+    thumb: "ai-chatbot",
+  },
+  {
     id: "swipi",
     title: "Swipi — Swipe Photo Cleaner",
     summary:
@@ -713,6 +732,7 @@ export const FEATURED_PROJECTS = [
   "shario",
   "linkedin-mcp",
   "x-mcp-builder",
+  "ai-chatbot",
   "swipi",
   "spendwise",
 ]
