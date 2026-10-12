@@ -504,6 +504,24 @@ export const PROJECTS: Project[] = [
     image: "/project-shario.jpg",
   },
   {
+    id: "shahid-nawaz",
+    title: "Shahid Nawaz — CEO Personal Brand",
+    summary:
+      "Personal brand site for a Dubai real estate CEO advising family offices and high-net-worth investors.",
+    description:
+      "Next.js site for Shahid Nawaz, a Dubai CEO who structures developer capital across the Gulf. Editorial hero, the principal's profile, a services suite, an investment philosophy, a blog, and private-office and WhatsApp enquiry paths.",
+    story:
+      "His clients are family offices and high-net-worth investors, so the site had to read like a private bank, not a brokerage. That meant light editorial type with a single bronze accent, a dark studio portrait, and calm, understated copy. There are no listings or hard sells: every path leads to a private-office enquiry or a direct WhatsApp, the way this audience actually wants to make contact.",
+    tech: ["Next.js", "React", "TailwindCSS"],
+    status: "shipped",
+    outcome: "Live at mshahidnawaz.com",
+    client: "Shahid Nawaz (Dubai, UAE)",
+    category: "Client",
+    demoUrl: "https://www.mshahidnawaz.com/",
+    thumb: "shahid-nawaz",
+    image: "/project-shahid-nawaz.jpg",
+  },
+  {
     id: "dubai-real-estate",
     title: "Dubai Real Estate AI Platform (Concept)",
     summary:
@@ -767,6 +785,7 @@ export const FEATURED_PROJECTS = [
   "msn-developments",
   "ere-group",
   "shario",
+  "shahid-nawaz",
   "linkedin-mcp",
   "x-mcp-builder",
   "ai-chatbot",
