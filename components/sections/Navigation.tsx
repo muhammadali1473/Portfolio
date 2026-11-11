@@ -109,6 +109,12 @@ export function Navigation() {
     };
   }, [mobileOpen]);
 
+  // The redesigned homepage and the redesigned project pages ship their own
+  // in-card navigation, so the global fixed header is suppressed there. Every
+  // other standalone route still gets it. (Placed after all hooks so hook
+  // order stays stable across renders.)
+  if (pathname === "/" || pathname.startsWith("/projects")) return null;
+
   return (
     <>
       <motion.header

@@ -1,38 +1,41 @@
-import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { TechStack } from "@/components/sections/TechStack";
-import { Services } from "@/components/sections/Services";
-import { Process } from "@/components/sections/Process";
-import { Projects } from "@/components/sections/Projects";
-import { McpExpertise } from "@/components/sections/McpExpertise";
-import { ClientWork } from "@/components/sections/ClientWork";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { GitHubRepos } from "@/components/sections/GitHubRepos";
-import { Pricing } from "@/components/sections/Pricing";
-import { Contact } from "@/components/sections/Contact";
+import {
+  CloudBackdrop,
+  PageCard,
+  PortfolioNav,
+  PortfolioHero,
+  ServiceList,
+  ContactCTA,
+  MiniFooter,
+} from "@/components/portfolio/parts";
+import { SelectedWork } from "@/components/portfolio/SelectedWork";
+import { SocialAutomationSection } from "@/components/portfolio/SocialAutomationSection";
+import { ExperienceClients } from "@/components/portfolio/ExperienceClients";
 
 /**
- * The whole site, in order. Each section owns its own anchor id, which the nav,
- * footer and card grid scroll to.
+ * Redesigned one-page homepage. A soft cloudy-grey backdrop with a single
+ * floating white "page card": nav → hero → selected work → service →
+ * experience (client work) → contact. The global header and footer are
+ * suppressed on `/` (see Navigation/Footer), so this page owns its own chrome.
  *
- * The standalone routes (/about, /services, …) still exist and render these
- * same components, so deep links and their per-page metadata keep working.
+ * The previous section components (About, TechStack, Pricing, …) and their
+ * standalone routes remain in the repo and reachable by deep link.
  */
 export default function HomePage() {
   return (
-    <>
-      <Hero />
-      <About />
-      <TechStack />
-      <Services />
-      <Process />
-      <Projects />
-      <McpExpertise />
-      <ClientWork />
-      <Testimonials />
-      <GitHubRepos />
-      <Pricing />
-      <Contact />
-    </>
+    <div className="font-[family-name:var(--font-display)]">
+      <CloudBackdrop />
+      <div className="mx-auto max-w-[1200px] px-3 py-4 sm:px-5 sm:py-6">
+        <PageCard>
+          <PortfolioNav />
+          <PortfolioHero />
+          <SelectedWork />
+          <SocialAutomationSection />
+          <ServiceList />
+          <ExperienceClients />
+          <ContactCTA />
+          <MiniFooter />
+        </PageCard>
+      </div>
+    </div>
   );
 }

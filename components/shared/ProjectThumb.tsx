@@ -12,6 +12,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SocialAutomationThumb } from "@/components/portfolio/SocialAutomationThumb";
 
 /*
  * Each project gets a bespoke branded mockup that looks like a miniature
@@ -71,6 +72,8 @@ function mockFor(slug: string, title: string) {
       return <RagChatbotMock title={title} />;
     case "lead-crm":
       return <LeadCrmMock title={title} />;
+    case "social-automation":
+      return <SocialAutomationThumb title={title} />;
     case "swipi":
       return <SwipiMock title={title} />;
     case "spendwise":

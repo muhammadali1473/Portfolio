@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Poppins } from "next/font/google";
 import { Navigation } from "@/components/sections/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { ChatWidget } from "@/components/ai/ChatWidget";
@@ -19,6 +19,16 @@ const fontSans = Inter({
 const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
+});
+
+// Rounded geometric display family used by the redesigned homepage (the big
+// hero name and the section headings). Loaded as a CSS variable so it only
+// applies where the homepage opts in via `font-[family-name:var(--font-display)]`.
+const fontDisplay = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -129,7 +139,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${fontSans.variable} ${fontMono.variable}`}
+      className={`${fontSans.variable} ${fontMono.variable} ${fontDisplay.variable}`}
       suppressHydrationWarning
     >
       {gtmEnabled && <GoogleTagManager gtmId={GTM_ID} />}

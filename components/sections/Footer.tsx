@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FileText, Mail, MapPin, Send } from "lucide-react";
 import {
   WhatsAppIcon,
@@ -35,6 +38,12 @@ const linksRight = HEADER_LINKS.slice(half);
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // The redesigned homepage and project pages close with their own contact CTA
+  // and compact footer, so the global footer is suppressed there and kept on
+  // every other route.
+  if (pathname === "/" || pathname.startsWith("/projects")) return null;
 
   return (
     <footer className="relative border-t border-white/10 pt-16">

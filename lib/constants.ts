@@ -326,6 +326,7 @@ export const PROJECTS: Project[] = [
     category: "Open Source",
     repoUrl: "https://github.com/muhammadali1473",
     thumb: "linkedin-mcp",
+    image: "/project-linkedin-mcp.png",
   },
   {
     id: "x-mcp-builder",
@@ -345,6 +346,7 @@ export const PROJECTS: Project[] = [
     category: "Open Source",
     repoUrl: "https://github.com/muhammadali1473",
     thumb: "x-mcp-builder",
+    image: "/project-x-mcp-builder.png",
   },
   {
     id: "ai-chatbot",
@@ -364,6 +366,7 @@ export const PROJECTS: Project[] = [
     category: "Open Source",
     repoUrl: "https://github.com/muhammadali1473/Chatbot_AI",
     thumb: "ai-chatbot",
+    image: "/project-ai-chatbot.png",
   },
   {
     id: "rag-chatbot",
@@ -383,6 +386,7 @@ export const PROJECTS: Project[] = [
     category: "Open Source",
     repoUrl: "https://github.com/muhammadali1473/AI-Document-Analysis-Chat-App",
     thumb: "rag-chatbot",
+    image: "/project-rag-chatbot.png",
   },
   {
     id: "lead-crm",
@@ -401,6 +405,24 @@ export const PROJECTS: Project[] = [
     delivered: "Shipped",
     category: "Client",
     thumb: "lead-crm",
+  },
+  {
+    id: "social-automation",
+    title: "Social Media Automation — MCP",
+    summary:
+      "One Claude-driven MCP hub that runs LinkedIn, Instagram, Facebook, TikTok, X and Reddit — comments, DMs, posts and lead capture, on autopilot.",
+    description:
+      "A single Model Context Protocol automation layer that gives Claude the tools to operate every major social channel from one place: search and comment, send DMs, publish posts, and capture leads across LinkedIn, Instagram, Facebook, TikTok, X and Reddit.",
+    story:
+      "Running outreach across six platforms by hand doesn't scale. This MCP hub turns each network into a set of Claude-callable tools, so one agent can watch for buying signals, reply in the person's language, publish on a schedule and log every qualified lead — with daily caps and human-safe pacing baked in. The cloud sits at the centre; every channel plugs into it.",
+    tech: ["Claude", "MCP Protocol", "Python", "Unipile"],
+    status: "shipped",
+    outcome: "Runs daily across six social platforms",
+    client: "Personal / OSS",
+    role: "Solo developer",
+    delivered: "Shipped",
+    category: "Open Source",
+    thumb: "social-automation",
   },
   {
     id: "swipi",
