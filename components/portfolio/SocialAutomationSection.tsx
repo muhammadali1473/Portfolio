@@ -22,9 +22,6 @@ export function SocialAutomationSection() {
         className="relative overflow-hidden rounded-[28px] px-6 py-12 sm:px-12 sm:py-16"
         style={{ background: "linear-gradient(140deg,#0a0f26 0%,#1d1340 46%,#3a1c52 100%)" }}
       >
-        {/* ambient luxe glows */}
-        <div aria-hidden className="pointer-events-none absolute -left-10 -top-10 h-56 w-56 rounded-full bg-violet-500/25 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-16 -right-10 h-64 w-64 rounded-full bg-fuchsia-500/20 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute inset-0 grid-pattern opacity-[0.1]" />
 
         {/* heading */}

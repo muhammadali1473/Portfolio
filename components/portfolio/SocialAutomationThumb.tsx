@@ -15,9 +15,6 @@ export function SocialAutomationThumb({ title }: { title: string }) {
       className="absolute inset-0"
       style={{ background: "linear-gradient(140deg,#0a0f26 0%,#1d1340 46%,#3a1c52 100%)" }}
     >
-      {/* luxe glows */}
-      <div aria-hidden className="absolute -left-8 -top-8 h-32 w-32 rounded-full bg-violet-500/30 blur-3xl" />
-      <div aria-hidden className="absolute -bottom-10 -right-6 h-36 w-36 rounded-full bg-fuchsia-500/25 blur-3xl" />
       <div aria-hidden className="absolute inset-0 grid-pattern opacity-[0.1]" />
 
       {/* curly arrows + flowing particles */}
