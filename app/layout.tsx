@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Poppins } from "next/font/google";
-import { Navigation } from "@/components/sections/Navigation";
-import { Footer } from "@/components/sections/Footer";
 import { ChatWidget } from "@/components/ai/ChatWidget";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ScrollProgress } from "@/components/shared/ScrollProgress";
@@ -157,9 +155,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
 
         <ScrollProgress />
-        <Navigation />
         <main id="main-content">{children}</main>
-        <Footer />
         <ScrollToTop />
         <ChatWidget />
         <script

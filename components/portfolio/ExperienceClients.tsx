@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { CLIENT_DELIVERABLES } from "@/lib/constants";
+import { CLIENT_DELIVERABLES, EXPERIENCE_CAPABILITIES } from "@/lib/constants";
 import { ProjectThumb } from "@/components/shared/ProjectThumb";
 import { EASE } from "@/components/portfolio/motion";
 
@@ -43,6 +44,28 @@ export function ExperienceClients() {
           <span className="text-sm text-neutral-400">4+ years shipping</span>
         </div>
 
+        {/* Capability strip — the breadth of delivery behind the shipped work:
+            what I build, how I grow it, and the stack underneath. */}
+        <div className="relative mt-6">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-500">
+            What I deliver
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {EXPERIENCE_CAPABILITIES.map((cap, i) => (
+              <motion.span
+                key={cap}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, ease: EASE, delay: i * 0.04 }}
+                className="rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-[13px] font-medium text-neutral-200 transition-colors hover:border-white/30 hover:bg-white/10"
+              >
+                {cap}
+              </motion.span>
+            ))}
+          </div>
+        </div>
+
         {/* Fixed preview: fades in on hover, does not follow the cursor. */}
         <div className="pointer-events-none absolute right-10 top-1/2 z-20 hidden w-72 -translate-y-1/2 lg:block">
           <AnimatePresence mode="wait">
@@ -77,10 +100,8 @@ export function ExperienceClients() {
               onMouseLeave={() => setHovered(null)}
               className="border-b border-white/10"
             >
-              <a
-                href={r.demoUrl || `/projects/${r.id}`}
-                target={r.demoUrl ? "_blank" : undefined}
-                rel={r.demoUrl ? "noopener noreferrer" : undefined}
+              <Link
+                href={`/projects/${r.id}`}
                 className="group grid grid-cols-[1fr_auto] items-center gap-4 py-6 transition-opacity duration-300"
                 style={{ opacity: hovered && hovered !== r.id ? 0.4 : 1 }}
               >
@@ -99,7 +120,7 @@ export function ExperienceClients() {
                     className="text-neutral-500 transition-colors group-hover:text-white"
                   />
                 </div>
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>

@@ -91,7 +91,10 @@ export function SelectedWork() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, ease: EASE, delay: (i % 2) * 0.06 }}
             >
-              <Link href={`/projects/${p.id}`} className="group block">
+              <CardLink
+                href={p.demoUrl || `/projects/${p.id}`}
+                external={Boolean(p.demoUrl)}
+              >
                 <motion.div
                   whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 300, damping: 22 }}
@@ -111,12 +114,37 @@ export function SelectedWork() {
                   <Tag>{p.category}</Tag>
                   {p.tech[0] && <Tag>{p.tech[0]}</Tag>}
                 </div>
-              </Link>
+              </CardLink>
             </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>
     </section>
+  );
+}
+
+/**
+ * A project card links straight to the live site when one exists (opens in a
+ * new tab — "go see it live"), and otherwise to the in-site detail page. The
+ * Experience section is where every item opens its full write-up instead.
+ */
+function CardLink({
+  href,
+  external,
+  children,
+}: {
+  href: string;
+  external: boolean;
+  children: React.ReactNode;
+}) {
+  return external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="group block">
+      {children}
+    </a>
+  ) : (
+    <Link href={href} className="group block">
+      {children}
+    </Link>
   );
 }
 

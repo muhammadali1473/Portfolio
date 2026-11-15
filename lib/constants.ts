@@ -190,6 +190,7 @@ export const TECH_STACK: TechCategory[] = [
     items: [
       { name: "PostgreSQL", level: 5, brand: "postgres" },
       { name: "MongoDB", level: 4, brand: "mongodb" },
+      { name: "Firebase", level: 4, brand: "firebase" },
       { name: "Redis", level: 4, brand: "redis" },
       { name: "Supabase", level: 5, brand: "supabase" },
     ],
@@ -819,4 +820,25 @@ export const FEATURED_PROJECTS = [
   .map((id) => PROJECTS.find((p) => p.id === id))
   .filter((p): p is Project => Boolean(p));
 
-export const CLIENT_DELIVERABLES = PROJECTS.filter((p) => p.category === "Client");
+/** Experience rows: real, shipped client work only. Proposal/concept pitches
+ *  (status "proposal") are deliberately excluded so the block reads as proof of
+ *  delivery, not a list of things "awaiting client go-ahead". */
+export const CLIENT_DELIVERABLES = PROJECTS.filter(
+  (p) => p.category === "Client" && p.status === "shipped",
+);
+
+/**
+ * Capability tags shown in the /EXPERIENCE block — the breadth of work behind
+ * the shipped client sites: what I build, how I grow it, and the stack beneath.
+ */
+export const EXPERIENCE_CAPABILITIES: string[] = [
+  "Business Automation",
+  "Websites",
+  "Web & Mobile Apps",
+  "SEO & AEO",
+  "Google Optimization",
+  "Frontend",
+  "Backend",
+  "Firebase",
+  "MongoDB",
+];
