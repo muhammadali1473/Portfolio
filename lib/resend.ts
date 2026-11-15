@@ -14,7 +14,6 @@ type ContactPayload = {
   name: string;
   email: string;
   company?: string;
-  budget?: string;
   projectTypes?: string[];
   message: string;
 };
@@ -31,8 +30,6 @@ export function buildContactEmail(p: ContactPayload) {
       <div style="background:#FAF7F2;border:1px solid #DDD3C6;border-radius:14px;padding:20px;">
         <p style="margin:0 0 8px;color:#6B6155;font-size:12px;text-transform:uppercase;letter-spacing:0.15em;">From</p>
         <p style="margin:0 0 16px;font-size:16px;"><strong>${p.name}</strong> &lt;${p.email}&gt;${p.company ? ` · ${p.company}` : ""}</p>
-        <p style="margin:0 0 8px;color:#6B6155;font-size:12px;text-transform:uppercase;letter-spacing:0.15em;">Budget</p>
-        <p style="margin:0 0 16px;font-size:15px;">${p.budget || "—"}</p>
         <p style="margin:0 0 8px;color:#6B6155;font-size:12px;text-transform:uppercase;letter-spacing:0.15em;">Project types</p>
         <p style="margin:0 0 16px;font-size:15px;">${types}</p>
         <p style="margin:0 0 8px;color:#6B6155;font-size:12px;text-transform:uppercase;letter-spacing:0.15em;">Message</p>
@@ -46,7 +43,6 @@ export function buildContactEmail(p: ContactPayload) {
   const text = `New portfolio inquiry
 
 From: ${p.name} <${p.email}>${p.company ? ` (${p.company})` : ""}
-Budget: ${p.budget || "—"}
 Project types: ${types}
 
 Message:

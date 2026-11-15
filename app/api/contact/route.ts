@@ -10,7 +10,6 @@ const ContactSchema = z.object({
   name: z.string().min(2).max(120),
   email: z.string().email().max(200),
   company: z.string().max(120).optional(),
-  budget: z.string().max(60).optional(),
   projectTypes: z.array(z.string().max(40)).max(10).optional(),
   message: z.string().min(10).max(4000),
 });

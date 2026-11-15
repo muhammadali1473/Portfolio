@@ -32,8 +32,6 @@ const PROJECT_TYPES = [
   "Other",
 ] as const;
 
-const BUDGETS = ["< $500", "$500–1K", "$1K–2.5K", "$2.5K–5K", "$5K+"] as const;
-
 // Only the two "start a conversation" channels. The social profiles
 // (GitHub, LinkedIn, X, Upwork) already live in the homepage hero, so they
 // are intentionally not duplicated here.
@@ -46,7 +44,6 @@ type Form = {
   name: string;
   email: string;
   company: string;
-  budget: string;
   projectTypes: string[];
   message: string;
 };
@@ -55,7 +52,6 @@ const emptyForm: Form = {
   name: "",
   email: "",
   company: "",
-  budget: "$1K–2.5K",
   projectTypes: [],
   message: "",
 };
@@ -162,17 +158,6 @@ export function ContactPortfolio() {
                 className={inputClass}
                 placeholder="Acme Inc."
               />
-            </Field>
-            <Field label="Budget">
-              <select
-                value={form.budget}
-                onChange={(e) => setForm((f) => ({ ...f, budget: e.target.value }))}
-                className={inputClass}
-              >
-                {BUDGETS.map((b) => (
-                  <option key={b}>{b}</option>
-                ))}
-              </select>
             </Field>
           </div>
 

@@ -31,7 +31,7 @@ export default function PrivacyPage() {
           <p className="mt-2 text-muted-foreground">
             This site is a personal portfolio. The only data collected is what you
             voluntarily submit through the contact form (name, email, company,
-            budget, project type, message) or through the AI chat demos (your
+            project type, message) or through the AI chat demos (your
             messages).
           </p>
 

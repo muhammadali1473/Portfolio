@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import {
   GitHubIcon,
@@ -12,7 +12,7 @@ import {
 } from "@/components/shared/SocialIcons";
 import { FEATURED_PROJECTS, SERVICES } from "@/lib/constants";
 import { site } from "@/lib/site";
-import { Reveal, Stagger, staggerItem, EASE } from "@/components/portfolio/motion";
+import { Reveal, staggerItem, EASE } from "@/components/portfolio/motion";
 
 /**
  * Building blocks for the redesigned one-page homepage: a greyscale cloudy
@@ -30,38 +30,14 @@ export const SERVICE_COUNT = SERVICES.length;
 /* --------------------------------------------------------------------------- */
 
 /**
- * The floating white page card. A soft light follows the cursor and, via a
- * `soft-light` blend, tints whatever place it passes over — so moving the mouse
- * only changes the colour of each area, nothing moves. Reverts as the cursor
- * leaves. Pointer-events stay off so the glow never blocks clicks.
+ * The floating white page card. A plain container — no cursor-following tint,
+ * so moving the mouse never recolours the photo, the name or anything else
+ * inside it. Works identically on touch and desktop.
  */
 export function PageCard({ children }: { children: React.ReactNode }) {
-  const x = useMotionValue(-9999);
-  const y = useMotionValue(-9999);
-  const glow = useMotionTemplate`radial-gradient(260px circle at ${x}px ${y}px, rgba(255,247,235,0.85), rgba(255,247,235,0.0) 70%)`;
-
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    x.set(e.clientX - r.left);
-    y.set(e.clientY - r.top);
-  };
-  const onLeave = () => {
-    x.set(-9999);
-    y.set(-9999);
-  };
-
   return (
-    <div
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      className="relative overflow-hidden rounded-[28px] bg-[#f4f4f5] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)]"
-    >
+    <div className="relative overflow-hidden rounded-[28px] bg-[#f4f4f5] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)]">
       {children}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-40 mix-blend-soft-light"
-        style={{ background: glow }}
-      />
     </div>
   );
 }
